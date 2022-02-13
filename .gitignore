@@ -31,9 +31,6 @@
 *.out
 *.app
 
-main.cpp
+main
 token.txt
 tmp/*
-/*/*.txt
-/*.txt
-/*.sh
