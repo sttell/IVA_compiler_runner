@@ -4,7 +4,7 @@ cmake_minimum_required(VERSION 3.0) # Проверка версии CMake.
 
 
 
-find_package(Boost COMPONENTS program_options filesystem)
+find_package(Boost COMPONENTS program_options filesystem system thread)
 
 include_directories(${Boost_INCLUDE_DIRS})
 
