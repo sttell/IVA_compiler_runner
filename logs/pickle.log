@@ -1,0 +1,290 @@
+conv2d_layer_1
+	filters 0 864
+	biases 864 64
+	scale 928 64
+	activation_coefficients 992 64
+conv2d_layer_2
+	filters 1056 18432
+	biases 19488 128
+	scale 19616 128
+	activation_coefficients 19744 128
+conv2d_layer_3
+	filters 19872 2048
+	biases 21920 64
+	scale 21984 64
+	activation_coefficients 22048 64
+conv2d_layer_4
+	filters 22112 18432
+	biases 40544 128
+	scale 40672 128
+	activation_coefficients 40800 128
+conv2d_layer_5
+	filters 40928 73728
+	biases 114656 256
+	scale 114912 256
+	activation_coefficients 115168 256
+conv2d_layer_6
+	filters 115424 8192
+	biases 123616 128
+	scale 123744 128
+	activation_coefficients 123872 128
+conv2d_layer_7
+	filters 124000 73728
+	biases 197728 256
+	scale 197984 256
+	activation_coefficients 198240 256
+conv2d_layer_8
+	filters 198496 8192
+	biases 206688 128
+	scale 206816 128
+	activation_coefficients 206944 128
+conv2d_layer_9
+	filters 207072 73728
+	biases 280800 256
+	scale 281056 256
+	activation_coefficients 281312 256
+conv2d_layer_10
+	filters 281568 294912
+	biases 576480 512
+	scale 576992 512
+	activation_coefficients 577504 512
+conv2d_layer_11
+	filters 578016 32768
+	biases 610784 256
+	scale 611040 256
+	activation_coefficients 611296 256
+conv2d_layer_12
+	filters 611552 294912
+	biases 906464 512
+	scale 906976 512
+	activation_coefficients 907488 512
+conv2d_layer_13
+	filters 908000 32768
+	biases 940768 256
+	scale 941024 256
+	activation_coefficients 941280 256
+conv2d_layer_14
+	filters 941536 294912
+	biases 1236448 512
+	scale 1236960 512
+	activation_coefficients 1237472 512
+conv2d_layer_15
+	filters 1237984 32768
+	biases 1270752 256
+	scale 1271008 256
+	activation_coefficients 1271264 256
+conv2d_layer_16
+	filters 1271520 294912
+	biases 1566432 512
+	scale 1566944 512
+	activation_coefficients 1567456 512
+conv2d_layer_17
+	filters 1567968 32768
+	biases 1600736 256
+	scale 1600992 256
+	activation_coefficients 1601248 256
+conv2d_layer_18
+	filters 1601504 294912
+	biases 1896416 512
+	scale 1896928 512
+	activation_coefficients 1897440 512
+conv2d_layer_19
+	filters 1897952 32768
+	biases 1930720 256
+	scale 1930976 256
+	activation_coefficients 1931232 256
+conv2d_layer_20
+	filters 1931488 294912
+	biases 2226400 512
+	scale 2226912 512
+	activation_coefficients 2227424 512
+conv2d_layer_21
+	filters 2227936 32768
+	biases 2260704 256
+	scale 2260960 256
+	activation_coefficients 2261216 256
+conv2d_layer_22
+	filters 2261472 294912
+	biases 2556384 512
+	scale 2556896 512
+	activation_coefficients 2557408 512
+conv2d_layer_23
+	filters 2557920 32768
+	biases 2590688 256
+	scale 2590944 256
+	activation_coefficients 2591200 256
+conv2d_layer_24
+	filters 2591456 294912
+	biases 2886368 512
+	scale 2886880 512
+	activation_coefficients 2887392 512
+conv2d_layer_25
+	filters 2887904 32768
+	biases 2920672 256
+	scale 2920928 256
+	activation_coefficients 2921184 256
+conv2d_layer_26
+	filters 2921440 294912
+	biases 3216352 512
+	scale 3216864 512
+	activation_coefficients 3217376 512
+conv2d_layer_27
+	filters 3217888 1179648
+	biases 4397536 1024
+	scale 4398560 1024
+	activation_coefficients 4399584 1024
+conv2d_layer_28
+	filters 4400608 131072
+	biases 4531680 512
+	scale 4532192 512
+	activation_coefficients 4532704 512
+conv2d_layer_29
+	filters 4533216 1179648
+	biases 5712864 1024
+	scale 5713888 1024
+	activation_coefficients 5714912 1024
+conv2d_layer_30
+	filters 5715936 131072
+	biases 5847008 512
+	scale 5847520 512
+	activation_coefficients 5848032 512
+conv2d_layer_31
+	filters 5848544 1179648
+	biases 7028192 1024
+	scale 7029216 1024
+	activation_coefficients 7030240 1024
+conv2d_layer_32
+	filters 7031264 131072
+	biases 7162336 512
+	scale 7162848 512
+	activation_coefficients 7163360 512
+conv2d_layer_33
+	filters 7163872 1179648
+	biases 8343520 1024
+	scale 8344544 1024
+	activation_coefficients 8345568 1024
+conv2d_layer_34
+	filters 8346592 131072
+	biases 8477664 512
+	scale 8478176 512
+	activation_coefficients 8478688 512
+conv2d_layer_35
+	filters 8479200 1179648
+	biases 9658848 1024
+	scale 9659872 1024
+	activation_coefficients 9660896 1024
+conv2d_layer_36
+	filters 9661920 131072
+	biases 9792992 512
+	scale 9793504 512
+	activation_coefficients 9794016 512
+conv2d_layer_37
+	filters 9794528 1179648
+	biases 10974176 1024
+	scale 10975200 1024
+	activation_coefficients 10976224 1024
+conv2d_layer_38
+	filters 10977248 131072
+	biases 11108320 512
+	scale 11108832 512
+	activation_coefficients 11109344 512
+conv2d_layer_39
+	filters 11109856 1179648
+	biases 12289504 1024
+	scale 12290528 1024
+	activation_coefficients 12291552 1024
+conv2d_layer_40
+	filters 12292576 131072
+	biases 12423648 512
+	scale 12424160 512
+	activation_coefficients 12424672 512
+conv2d_layer_41
+	filters 12425184 1179648
+	biases 13604832 1024
+	scale 13605856 1024
+	activation_coefficients 13606880 1024
+conv2d_layer_42
+	filters 13607904 131072
+	biases 13738976 512
+	scale 13739488 512
+	activation_coefficients 13740000 512
+conv2d_layer_43
+	filters 13740512 1179648
+	biases 14920160 1024
+	scale 14921184 1024
+	activation_coefficients 14922208 1024
+conv2d_layer_44
+	filters 14923232 4718592
+	biases 19641824 2048
+	scale 19643872 2048
+	activation_coefficients 19645920 2048
+conv2d_layer_45
+	filters 19647968 524288
+	biases 20172256 1024
+	scale 20173280 1024
+	activation_coefficients 20174304 1024
+conv2d_layer_46
+	filters 20175328 4718592
+	biases 24893920 2048
+	scale 24895968 2048
+	activation_coefficients 24898016 2048
+conv2d_layer_47
+	filters 24900064 524288
+	biases 25424352 1024
+	scale 25425376 1024
+	activation_coefficients 25426400 1024
+conv2d_layer_48
+	filters 25427424 4718592
+	biases 30146016 2048
+	scale 30148064 2048
+	activation_coefficients 30150112 2048
+conv2d_layer_49
+	filters 30152160 524288
+	biases 30676448 1024
+	scale 30677472 1024
+	activation_coefficients 30678496 1024
+conv2d_layer_50
+	filters 30679520 4718592
+	biases 35398112 2048
+	scale 35400160 2048
+	activation_coefficients 35402208 2048
+conv2d_layer_51
+	filters 35404256 524288
+	biases 35928544 1024
+	scale 35929568 1024
+	activation_coefficients 35930592 1024
+conv2d_layer_52
+	filters 35931616 4718592
+	biases 40650208 2048
+	scale 40652256 2048
+	activation_coefficients 40654304 2048
+conv2d_layer_53
+	filters 40656352 524288
+	biases 41180640 1024
+	scale 41181664 1024
+	activation_coefficients 41182688 1024
+conv2d_layer_54
+	filters 41183712 4718592
+	biases 45902304 2048
+	scale 45904352 2048
+	activation_coefficients 45906400 2048
+conv2d_layer_55
+	filters 45908448 524288
+	biases 46432736 1024
+	scale 46433760 1024
+	activation_coefficients 46434784 1024
+conv2d_layer_56
+	filters 46435808 4718592
+	biases 51154400 2048
+	scale 51156448 2048
+	activation_coefficients 51158496 2048
+conv2d_layer_57
+	filters 51160544 524288
+	biases 51684832 1024
+	scale 51685856 1024
+	activation_coefficients 51686880 1024
+conv2d_layer_58
+	filters 51687904 131072
+	biases 51818976 512
+	scale 51819488 512
+	activation_coefficients 51820000 512
