@@ -2,18 +2,22 @@
 #define _LIB_INCLDUE_SETTINGS_FILECHECKERSETTINGS_H_
 
 #include <string>
+#include "../path.h"
 
 // Структура для хранения настроек модуля File Checker Module
 struct FileCheckerSettings
 {
+    FileCheckerSettings() : json_file_path(PathType::File),
+                            weights_file_path(PathType::File),
+                            out_log_path(PathType::File) {};
     // Путь к json описанию сети
-    std::string json_file_path;
+    Path json_file_path;
 
     // Путь к файлу с весами сети
-    std::string weights_file_path;
+    Path weights_file_path;
 
     // Путь к логу работы модуля
-    std::string out_log_path;
+    Path out_log_path;
 };
 
 #endif // _LIB_INCLDUE_SETTINGS_FILECHECKERSETTINGS_H_

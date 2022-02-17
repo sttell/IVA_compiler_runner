@@ -18,13 +18,7 @@
 #define RECONSTRUCT_ARG_NAME "reconstruct_pickle_path="
 #define THROW_DESC "Pickle converter module error. "
 #define ERROR_BUFFER "logs/pickle_converter_stderr.log"
-#ifdef _WIN32
-#define SLASH '\\'
-#endif // _WIN32
 
-#ifdef __linux__
-#define SLASH '/'
-#endif // __linux__
 
 /* Конвертер из формата pickle в формат bin
 *  Инициализируется настройками. Встроен модуль проверки корректности
@@ -57,27 +51,15 @@ private:
 
     // Очистка кэша потока ошибок. 
     // Необходимо для корректного вывода ошибок при каждом запуске
-    void clearStdErrCache(const std::string& path) const;
+    void clearStdErrCache(const Path& path) const;
 
     // Проверка наличия файла. 
     // В случае отсутствия выбрасывает исключение std::runtime_error
     // с описанием ошибки.
-    void checkFile(const std::string& path) const;
-
-    // Проверка существования директории
-    bool checkDir(const std::string& path) const;
-
-    // Проверка на принадлежность строки к типу "путь к директории"
-    bool isDirectoryPath(const std::string& path) const;
-    
-    // Проверка на присутствие слэшей в пути
-    bool isDirectoryInPath(const std::string& path) const;
+    void checkFile(const Path& path) const;
 
     // Проверка настройки для выходного файла
-    void checkOutFileProperty(const std::string& path) const;
-
-    // Извлечение директории из пути
-    std::string getDirectoryFromPath(const std::string& path) const;
+    void checkOutFileProperty(const Path& path) const;
 
     // Проверка корректности настроек
     void checkSettingsCorrectness() const;

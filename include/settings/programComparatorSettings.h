@@ -2,44 +2,61 @@
 #define _LIB_INCLDUE_SETTINGS_PROGRAMCOMPARATORSETTINGS_H_
 
 #include <string>
+#include "../path.h"
 
 // Структура для хранения настроек модуля Program Comparator Module
 struct ProgramComparatorSettings
 {
+    ProgramComparatorSettings() : is_dump_test_data(false),
+                                  DTS_S0_file_path(PathType::File),
+                                  DTS_S1_file_path(PathType::File),
+                                  DTS_L0_file_path(PathType::File),
+                                  DTS_L1_file_path(PathType::File),
+                                  ME_file_path(PathType::File),
+                                  VE_file_path(PathType::File),
+                                  weight_file_path(PathType::File),
+                                  weight_dir_name("constants"),
+                                  metadata_path(PathType::File),
+                                  tpu_data_path(PathType::File),
+                                  cache_data_path(PathType::File),
+                                  program_archive_name("program.zip"),
+                                  program_out_dir_path(PathType::Directory),
+                                  out_log_path(PathType::File) {};
+
     // Флаг выгрузки логов компиляции в директорию с программой
     bool is_dump_test_data;
 
     // Пути к бинарным файлам программы
-    std::string DTS_S0_file_path;
-    std::string DTS_L0_file_path;
-    std::string DTS_S1_file_path;
-    std::string DTS_L1_file_path;
-    std::string VE_file_path;
-    std::string ME_file_path;
+    Path DTS_S0_file_path;
+    Path DTS_L0_file_path;
+    Path DTS_S1_file_path;
+    Path DTS_L1_file_path;
+    Path VE_file_path;
+    Path ME_file_path;
 
     // Путь к файлу с весами
-    std::string weight_file_path;
+    Path weight_file_path;
     
     // Название директории для файла с весами
     std::string weight_dir_name;
     
     // Путь к файлу с метаданными
-    std::string metadata_path;
+    Path metadata_path;
     
     // Путь к файлу tpu_data с логами процесса компиляции сети
-    std::string tpu_data_path;
+    Path tpu_data_path;
     
     // Путь к файлу cache_data с логами процесса компиляции сети
-    std::string cache_data_path;
+    Path cache_data_path;
 
     // Название архива с программой
-    std::string program_archive_name;
+    Path program_archive_name;
 
     // Выходная директория с программой
-    std::string program_out_dir_path;
+    Path program_out_dir_path;
 
     // Путь к логу работы модуля
-    std::string out_log_path;
+    Path out_log_path;
 };
 
 #endif // _LIB_INCLDUE_SETTINGS_PROGRAMCOMPARATORSETTINGS_H_

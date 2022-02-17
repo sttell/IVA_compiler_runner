@@ -16,7 +16,7 @@ void init_global_settings(GlobalSettings& settings) {
     settings.pickle_converter.out_log_path = "logs/pickle.log";
     settings.pickle_converter.pickle_file_path = "fpga_data.pickle";
     settings.pickle_converter.weights_out_path = "weights.bin";
-    settings.pickle_converter.strerr_log_path = "logs/pickle_converter_stderr.log";
+    settings.pickle_converter.stderr_log_path = "logs/pickle_converter_stderr.log";
     settings.pickle_converter.reconstruct_log_path = "logs/pickle_reconstruct.log";
 }
 
