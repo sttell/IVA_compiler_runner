@@ -136,7 +136,8 @@ exit_module_status CompilerCore::runJsonConverterModule(const JsonConverterSetti
 // Запуск модуля Pickle Converter
 exit_module_status CompilerCore::runPickleConverterModule(const PickleConverterSettings& settings) const {
     std::cout << "Module Pickle Converter runned" << std::endl;
-    return ModuleExitStatus::SUCCESS;
+    PickleConverterModule module(settings);
+    return module.runProcess();
 }
 
 // Запуск модуля File Checker

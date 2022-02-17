@@ -6,6 +6,7 @@
 #include "modules.h"
 #include "moduleExitStatus.h"
 #include "settings/globalSettings.h"
+#include "modules/pickleConverterModule.h"
 #include "compileStatus.h"
 #include <vector>
 
