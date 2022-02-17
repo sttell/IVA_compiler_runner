@@ -149,7 +149,8 @@ exit_module_status CompilerCore::runFileCheckerModule(const FileCheckerSettings&
 // Запуск модуля Addr Checker
 exit_module_status CompilerCore::runAddrCheckerModule(const AddrCheckerSettings& settings) const {
     std::cout << "Module Addr Checker runned" << std::endl;
-    return ModuleExitStatus::SUCCESS;
+    AddressCheckerModule module(settings);
+    return module.runProcess();
 }
 
 // Запуск модуля Compile Runner

@@ -7,6 +7,7 @@
 #include "moduleExitStatus.h"
 #include "settings/globalSettings.h"
 #include "modules/pickleConverterModule.h"
+#include "modules/addressCheckerModule.h"
 #include "compileStatus.h"
 #include <vector>
 

@@ -8,18 +8,26 @@
 struct AddrCheckerSettings
 {
 
-AddrCheckerSettings() : log_path(PathType::File),
+AddrCheckerSettings() : pickle_buffer_path(PathType::File),
                         json_path(PathType::File),
-                        out_log_path(PathType::File) {};
+                        out_log_path(PathType::File),
+                        stderr_log_path(PathType::File),
+                        out_json_path(PathType::File) {};
 
 // Путь к логу pickle reader модуля
-Path log_path;
+Path pickle_buffer_path;
 
 // Путь к JSON с описанием сети в формате hpm_scheduler
 Path json_path;
 
+// Путь к выхожному файлу JSON.
+Path out_json_path;
+
 // Путь к output log для модуля Address Checker
 Path out_log_path;
+
+// Путь к логу с ошибками
+Path stderr_log_path;
 
 };
 
