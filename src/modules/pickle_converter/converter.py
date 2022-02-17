@@ -4,15 +4,13 @@ import pickle
 import numpy
 import sys
 
+# Переименовыванные потоки вывода
+stderr_out = sys.stderr
+stdout_out = sys.stdout
+
 # Коды выходов из программы
 NORMAL_EXIT = 0
-EXCEPTION_ERROR = 1
-VALUE_ERROR = 2
-FILE_NOT_FOUND_ERROR = 3
-LOOKUP_ERROR = 4
-RUNTIME_ERROR = 5
-MODULE_NOT_FOUND_ERROR = 6
-NAME_ERROR = 7
+ERROR_EXIT = 1
 
 # Идентификаторы типов констант в формате HPM
 HPM_WEIGHTS_STRID   = 'filters'
@@ -26,40 +24,31 @@ PICKLE_POS_SCALE_STRID = 'pos_scale'
 PICKLE_NEG_SCALE_STRID = 'neg_scale'
 PICKLE_BIAS_STRID      = 'bias'
 
+# Имена аргументов командной строки для входного, выходного и реконструкционного файлов 
+INPUT_PATH = "input_path"
+OUTPUT_PATH = "output_path"
+RECONSTRUCT_PATH = "reconstruct_pickle_path"
+
+# Режимы чтения записи
+WRITE_MODE = 'w'
+BYTEREAD_MODE = 'rb'
+
 # Аргументы командной строки
 arguments = {
-    "pickle_path": "",                 # Путь к входному файлу .pickle
-    "out_log_path": "",                # Путь к логу модуля
-    "out_file_path": "",               # Путь к выходному файлу .bin
-    "out_reconstruct_pickle_path": ""  # Путь к файлу с логом реконструкции pickle формата
+    INPUT_PATH: "",                 # Путь к входному файлу .pickle
+    OUTPUT_PATH: "",               # Путь к выходному файлу .bin
+    RECONSTRUCT_PATH: ""  # Путь к файлу с логом реконструкции pickle формата
 }
 
 # Обертка для обработки исключений. Необходимо для исключения аварийных прерываний
 # при прямом взаимодействии с GUI программы. Прокидывает на выход вид исключения
 def exception_handler_wrap(function):
+    exception_log = Logger(stderr_out, stream_mode=True)
     try:
         function()
-    except ValueError:
-        print('ValueError exception')
-        return VALUE_ERROR
-    except FileNotFoundError:
-        print('FileNotFoundError exception')
-        return FILE_NOT_FOUND_ERROR
-    except LookupError:
-        print('LookupError exception')
-        return LOOKUP_ERROR
-    except RuntimeError:
-        print('RuntimeError exception')
-        return RUNTIME_ERROR
-    except ModuleNotFoundError:
-        print('ModuleNotFoundError exception')
-        return MODULE_NOT_FOUND_ERROR
-    except NameError:
-        print('NameError exception')
-        return NAME_ERROR
-    except Exception:
-        print('Exception exception')
-        return EXCEPTION_ERROR
+    except Exception as e:
+        exception_log.write(str(e))
+        return ERROR_EXIT
     return NORMAL_EXIT
 
 # Функция загрузки данных из .pickle
@@ -73,15 +62,15 @@ def write_binary(pickle_data, arguments):
     array = numpy.empty(shape=(0), dtype=numpy.float16)
     
     # Инициализация выходного файла
-    out_file = open(arguments['out_file_path'], 'w')
+    out_file = open(arguments[OUTPUT_PATH], 'w')
     # Переменная хранящая счетчик адресов
     address = 0
 
-    # Инициализация лога
-    pickle_log = Logger(arguments['out_log_path'])
+    # Инициализация std out stream
+    pickle_log = Logger(stdout_out, stream_mode=True)
 
     # Реконструкция pickle файла в удобочитаемом виде
-    reconstruct_pickle = Logger(arguments["out_reconstruct_pickle_path"])
+    reconstruct_pickle = Logger(arguments[RECONSTRUCT_PATH])
     reconstruct_pickle.write(str(pickle_data))
     del reconstruct_pickle
 
@@ -174,7 +163,7 @@ def main():
     parser.fillArgDict(arguments)
     
     # Чтение данных и обработка
-    pickle_data = load_pickle_data(arguments['pickle_path'])
+    pickle_data = load_pickle_data(arguments[INPUT_PATH])
     write_binary(pickle_data, arguments)
 
 

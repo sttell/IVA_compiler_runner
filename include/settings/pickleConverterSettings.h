@@ -14,6 +14,12 @@ struct PickleConverterSettings
 
     // Путь к логу работы модуля
     std::string out_log_path;
+
+    // Путь к stderr логу
+    std::string strerr_log_path;
+
+    // Путь к реконструкции pickle файла
+    std::string reconstruct_log_path;
 };
 
 #endif // _LIB_INCLDUE_SETTINGS_PICKLECONVERTERSETTINGS_H_

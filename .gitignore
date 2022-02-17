@@ -34,3 +34,4 @@
 main
 token.txt
 tmp/*
+src/modules/pickle_converter/lib/__pycache__

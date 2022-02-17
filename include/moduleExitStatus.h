@@ -2,7 +2,7 @@
 #define _INCLUDE_MODULEEXITSTATUS_H_
 
 #include <cinttypes>
-#include <aliases.h>
+#include "aliases.h"
 
 // Статус выхода из модуля
 namespace ModuleExitStatus
