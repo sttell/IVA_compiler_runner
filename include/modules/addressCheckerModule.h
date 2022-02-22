@@ -76,7 +76,7 @@ private:
     void checkDirExist(const Path& path) const;
     // Проверка корректности настроек
     void checkSettingsCorrectness() const;
-    // TODO Чтение буффера Pickle
+    // Чтение буффера Pickle
     void readPickleBuffer();
     // Чтение JSON описания сети
     void readJSON();

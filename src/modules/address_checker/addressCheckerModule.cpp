@@ -120,7 +120,52 @@ void AddressCheckerModule::checkSettingsCorrectness() const {
 }
 
 void AddressCheckerModule::readPickleBuffer() {
-	// TODO Чтение буффера Pickle
+	try
+	{
+		// opening input file stream
+		std::ifstream fin;
+		fin.open(settings.pickle_buffer_path);
+
+		std::string b_key;
+		pickle_ld_t layer_data;
+		std::string ld_key;
+		std::pair<int, int> p;
+		int address, size;
+
+		std::string line;
+
+		// reading first line as layer name
+		std::getline(fin, line);
+		b_key = line;
+
+		// loop through all lines of input log file
+		while (std::getline(fin, line))
+		{
+			std::istringstream iss(line);
+			// if line is the name of new layer
+			if (!(iss >> ld_key >> address >> size))
+			{
+				// adding layer to buffer
+				pickle_buffer.insert({ b_key, layer_data });
+				// clearing layer_data
+				layer_data = {};
+				// updating layer name
+				b_key = line;
+				continue;
+			}
+			// else adding new data into layer data
+			p = { address, size };
+			layer_data.insert({ ld_key, p });
+		}
+
+		fin.close();
+	}
+	catch (std::exception const& e)
+	{
+		std::string err_desc = THROW_DESC;
+		err_desc += e.what();
+		throw std::runtime_error(err_desc.c_str());
+	}
 }
 
 void AddressCheckerModule::readJSON() {
