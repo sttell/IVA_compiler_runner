@@ -1,5 +1,36 @@
 #include "../../../include/modules/addressCheckerModule.h"
 
+bool is_number(const std::string& s)
+{
+	return !s.empty() && std::find_if(s.begin(), s.end(), [](unsigned char c) { return !(std::isdigit(c) || c == '.'); }) == s.end();
+}
+
+void put_value(std::ofstream& fout, const std::string& value)
+{
+	if (value == "true" || value == "false" || is_number(value))
+		fout << value;
+	else
+		fout << "\"" << value << "\"";
+	fout << ",";
+}
+
+void put_tree(std::ofstream& fout, const boost::property_tree::ptree& ptree)
+{
+	//fout << "{";
+	for (auto& item : ptree.get_child(""))
+	{
+		fout << "\n";
+		fout << "\"" << item.first << "\": ";
+		if (item.second.get_value<std::string>() == "")
+		{
+			put_tree(fout, item.second);
+		}
+		else
+			put_value(fout, item.second.get_value<std::string>());
+	}
+	//fout << "}";
+}
+
 exit_module_status AddressCheckerModule::runProcess() {
     // В любом из методов может возникнуть исключительная ситуация
     // которая записывается в лог с ошибками.
@@ -115,7 +146,51 @@ void AddressCheckerModule::readJSON() {
 }
 
 void AddressCheckerModule::dumpJSON() const {
-	// TODO Запись JSON с корректированными данными
+	try
+	{
+		// opening output file stream
+		std::ofstream fout;
+		fout.open(settings.json_path);
+		fout << "[";
+		// loop through array of layers
+		for (int i = 0; i < json_buffer.size(); i++)
+		{
+			fout << "\n{";
+			// loop through all fields of layer
+			for (auto& item : json_buffer[i].get_child(""))
+			{
+				fout << "\n";
+				fout << "\"" << item.first << "\": ";
+				// if value of field is an array
+				if (item.second.get_value<std::string>() == "")
+				{
+					fout << "[";
+					boost::property_tree::ptree leaf = item.second;
+					// loop through all elements of array
+					for (auto& leaf_item : leaf.get_child(""))
+					{
+						fout << "\n";
+						put_value(fout, leaf_item.second.get_value<std::string>());
+					}
+					fout.seekp(-1, std::ios_base::cur);
+					fout << "\n],";
+				}
+				else
+					put_value(fout, item.second.get_value<std::string>());
+			}
+			fout.seekp(-1, std::ios_base::cur);
+			fout << "\n},";
+		}
+		fout.seekp(-1, std::ios_base::cur);
+		fout << "\n]";
+		fout.close();
+	}
+	catch (std::exception const& e)
+	{
+		std::string err_desc = THROW_DESC;
+		err_desc += e.what();
+		throw std::runtime_error(err_desc.c_str());
+	}
 }
 
 void correctData() {

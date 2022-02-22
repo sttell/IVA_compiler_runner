@@ -23,7 +23,6 @@
 // Формат хранения JSON данных
 using json_buffer_t = std::vector<boost::property_tree::ptree>;
 
-
 // Pickle converter после окнвертации формирует буффер 
 // с подсчитанными адресами весов и размерами данных.
 
@@ -45,6 +44,14 @@ using pickle_ld_t = std::unordered_map<std::string, std::pair<int, int>>;
 // Формат хранения буффера pickle converter
 using pickle_buffer_t = std::unordered_map<std::string, pickle_ld_t>;
 
+// вспомогательная функция проверки является ли строка числом
+bool is_number(const std::string& s);
+
+// вспомогательная функция записи в выходной поток файла значения
+void put_value(std::ofstream& fout, const std::string& value);
+
+// TODO дописать рекурсивную запись деревьев. пока не используется (а вообще надо сделать отдельный класс json handler)
+void put_tree(std::ofstream& fout, const boost::property_tree::ptree& ptree);
 
 class AddressCheckerModule {  
 public:
@@ -73,7 +80,7 @@ private:
     void readPickleBuffer();
     // Чтение JSON описания сети
     void readJSON();
-    // TODO Запись JSON с корректированными данными
+    // Запись JSON с корректированными данными
     void dumpJSON() const;
     // TODO Коррекция данных
     void correctData();
