@@ -20,8 +20,8 @@
 
 #define THROW_DESC "Address Checker Module error. "
 
-// TODO Формат хранения JSON данных. Нужно будет поменять
-using json_buffer_t = std::vector<boost::any>;
+// Формат хранения JSON данных
+using json_buffer_t = std::vector<boost::property_tree::ptree>;
 
 
 // Pickle converter после окнвертации формирует буффер 
@@ -71,7 +71,7 @@ private:
     void checkSettingsCorrectness() const;
     // TODO Чтение буффера Pickle
     void readPickleBuffer();
-    // TODO Чтение JSON описания сети
+    // Чтение JSON описания сети
     void readJSON();
     // TODO Запись JSON с корректированными данными
     void dumpJSON() const;

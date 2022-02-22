@@ -87,3 +87,37 @@ void AddressCheckerModule::checkSettingsCorrectness() const {
     checkDirExist(settings.out_log_path);
     checkDirExist(settings.out_json_path);
 }
+
+void AddressCheckerModule::readPickleBuffer() {
+	// TODO Чтение буффера Pickle
+}
+
+void AddressCheckerModule::readJSON() {
+	try
+	{
+		// reading json into a tree
+		boost::property_tree::ptree root;
+		boost::property_tree::read_json(settings.json_path, root);
+
+		// loop through array of layers
+		for (auto& item : root.get_child(""))
+		{
+			// item has type pair<string,ptree<string,string>>
+			json_buffer.push_back(item.second);
+		}
+	}
+	catch (std::exception const& e)
+	{
+		std::string err_desc = THROW_DESC;
+		err_desc += e.what();
+		throw std::runtime_error(err_desc.c_str());
+	}
+}
+
+void AddressCheckerModule::dumpJSON() const {
+	// TODO Запись JSON с корректированными данными
+}
+
+void correctData() {
+	// TODO Коррекция данных
+}
