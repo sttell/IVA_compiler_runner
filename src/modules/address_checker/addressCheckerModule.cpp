@@ -1,5 +1,36 @@
 #include "../../../include/modules/addressCheckerModule.h"
 
+bool is_number(const std::string& s)
+{
+	return !s.empty() && std::find_if(s.begin(), s.end(), [](unsigned char c) { return !(std::isdigit(c) || c == '.'); }) == s.end();
+}
+
+void put_value(std::ofstream& fout, const std::string& value)
+{
+	if (value == "true" || value == "false" || is_number(value))
+		fout << value;
+	else
+		fout << "\"" << value << "\"";
+	fout << ",";
+}
+
+void put_tree(std::ofstream& fout, const boost::property_tree::ptree& ptree)
+{
+	//fout << "{";
+	for (auto& item : ptree.get_child(""))
+	{
+		fout << "\n";
+		fout << "\"" << item.first << "\": ";
+		if (item.second.get_value<std::string>() == "")
+		{
+			put_tree(fout, item.second);
+		}
+		else
+			put_value(fout, item.second.get_value<std::string>());
+	}
+	//fout << "}";
+}
+
 exit_module_status AddressCheckerModule::runProcess() {
     // В любом из методов может возникнуть исключительная ситуация
     // которая записывается в лог с ошибками.
@@ -86,4 +117,127 @@ void AddressCheckerModule::checkSettingsCorrectness() const {
     // Проверка существования директории
     checkDirExist(settings.out_log_path);
     checkDirExist(settings.out_json_path);
+}
+
+void AddressCheckerModule::readPickleBuffer() {
+	try
+	{
+		// opening input file stream
+		std::ifstream fin;
+		fin.open(settings.pickle_buffer_path);
+
+		std::string b_key;
+		pickle_ld_t layer_data;
+		std::string ld_key;
+		std::pair<int, int> p;
+		int address, size;
+
+		std::string line;
+
+		// reading first line as layer name
+		std::getline(fin, line);
+		b_key = line;
+
+		// loop through all lines of input log file
+		while (std::getline(fin, line))
+		{
+			std::istringstream iss(line);
+			// if line is the name of new layer
+			if (!(iss >> ld_key >> address >> size))
+			{
+				// adding layer to buffer
+				pickle_buffer.insert({ b_key, layer_data });
+				// clearing layer_data
+				layer_data = {};
+				// updating layer name
+				b_key = line;
+				continue;
+			}
+			// else adding new data into layer data
+			p = { address, size };
+			layer_data.insert({ ld_key, p });
+		}
+
+		fin.close();
+	}
+	catch (std::exception const& e)
+	{
+		std::string err_desc = THROW_DESC;
+		err_desc += e.what();
+		throw std::runtime_error(err_desc.c_str());
+	}
+}
+
+void AddressCheckerModule::readJSON() {
+	try
+	{
+		// reading json into a tree
+		boost::property_tree::ptree root;
+		boost::property_tree::read_json(settings.json_path, root);
+
+		// loop through array of layers
+		for (auto& item : root.get_child(""))
+		{
+			// item has type pair<string,ptree<string,string>>
+			json_buffer.push_back(item.second);
+		}
+	}
+	catch (std::exception const& e)
+	{
+		std::string err_desc = THROW_DESC;
+		err_desc += e.what();
+		throw std::runtime_error(err_desc.c_str());
+	}
+}
+
+void AddressCheckerModule::dumpJSON() const {
+	try
+	{
+		// opening output file stream
+		std::ofstream fout;
+		fout.open(settings.json_path);
+		fout << "[";
+		// loop through array of layers
+		for (int i = 0; i < json_buffer.size(); i++)
+		{
+			fout << "\n{";
+			// loop through all fields of layer
+			for (auto& item : json_buffer[i].get_child(""))
+			{
+				fout << "\n";
+				fout << "\"" << item.first << "\": ";
+				// if value of field is an array
+				if (item.second.get_value<std::string>() == "")
+				{
+					fout << "[";
+					boost::property_tree::ptree leaf = item.second;
+					// loop through all elements of array
+					for (auto& leaf_item : leaf.get_child(""))
+					{
+						fout << "\n";
+						put_value(fout, leaf_item.second.get_value<std::string>());
+					}
+					fout.seekp(-1, std::ios_base::cur);
+					fout << "\n],";
+				}
+				else
+					put_value(fout, item.second.get_value<std::string>());
+			}
+			fout.seekp(-1, std::ios_base::cur);
+			fout << "\n},";
+		}
+		fout.seekp(-1, std::ios_base::cur);
+		fout << "\n]";
+		fout.close();
+	}
+	catch (std::exception const& e)
+	{
+		std::string err_desc = THROW_DESC;
+		err_desc += e.what();
+		throw std::runtime_error(err_desc.c_str());
+	}
+}
+
+void correctData() {
+	// TODO Коррекция данных
 }
