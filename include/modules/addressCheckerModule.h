@@ -4,7 +4,10 @@
 #include "../moduleExitStatus.h"
 #include "../path.h"
 #include "../settings/addrCheckerSettings.h"
+#include "../jsonHandler.h"
 #include <boost/any.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/json_parser.hpp>
 #include <vector>
 #include <unordered_map>
 #include <fstream>
@@ -21,7 +24,7 @@
 #define THROW_DESC "Address Checker Module error. "
 
 // Формат хранения JSON данных
-using json_buffer_t = std::vector<boost::property_tree::ptree>;
+using json_buffer_t = boost::property_tree::ptree;
 
 // Pickle converter после окнвертации формирует буффер 
 // с подсчитанными адресами весов и размерами данных.
@@ -44,15 +47,6 @@ using pickle_ld_t = std::unordered_map<std::string, std::pair<int, int>>;
 // Формат хранения буффера pickle converter
 using pickle_buffer_t = std::unordered_map<std::string, pickle_ld_t>;
 
-// вспомогательная функция проверки является ли строка числом
-bool is_number(const std::string& s);
-
-// вспомогательная функция записи в выходной поток файла значения
-void put_value(std::ofstream& fout, const std::string& value);
-
-// TODO дописать рекурсивную запись деревьев. пока не используется (а вообще надо сделать отдельный класс json handler)
-void put_tree(std::ofstream& fout, const boost::property_tree::ptree& ptree);
-
 class AddressCheckerModule {  
 public:
     // Явный конструктор с инициализацией настроек
@@ -69,6 +63,8 @@ private:
     json_buffer_t json_buffer;
     // Буффер pickle
     pickle_buffer_t pickle_buffer;
+    // Обработчик json файлов
+    JsonHandler json_handler;
 
     // Проверка наличия файла с формированием исключения
     void checkFileExist(const Path&) const;
