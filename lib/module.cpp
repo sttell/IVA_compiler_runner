@@ -42,3 +42,10 @@ void Module::checkDirExist(const Path& path) const {
         throw std::runtime_error(err_desc.c_str());
     }
 }
+
+// Выбросить исключение с описанием description
+void Module::throwWithDesc(const std::string& description) const {
+    std::string err_desc(throw_desc);
+    err_desc += description;
+    throw std::runtime_error(err_desc);
+}

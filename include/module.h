@@ -20,6 +20,8 @@ protected:
     virtual void checkDirExist(const Path&) const;
     // Очищение кэша находящегося в std err log
     virtual void clearStdErrCache(const Path&) const;
+    // Выбросить исключение с описанием description
+    virtual void throwWithDesc(const std::string& description) const;
 };
 
 #endif // _INCLUDE_MODULE_H_
