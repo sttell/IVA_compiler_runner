@@ -5,7 +5,7 @@
 struct MapSize
 {
 // Характеристические размеры
-int X, Y, L;
+int B, X, Y, L;
 };
 
 #endif // _INCLUDE_MAPSIZE_H_
