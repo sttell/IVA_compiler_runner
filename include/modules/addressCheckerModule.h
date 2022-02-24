@@ -1,8 +1,7 @@
 #ifndef _INCLDUE_MODULES_ADDRESSCHECKERMODULE_H_
 #define _INCLDUE_MODULES_ADDRESSCHECKERMODULE_H_
 
-#include "../moduleExitStatus.h"
-#include "../path.h"
+#include "../module.h"
 #include "../settings/addrCheckerSettings.h"
 #include "../jsonHandler.h"
 #include <boost/any.hpp>
@@ -47,7 +46,7 @@ using pickle_ld_t = std::unordered_map<std::string, std::pair<int, int>>;
 // Формат хранения буффера pickle converter
 using pickle_buffer_t = std::unordered_map<std::string, pickle_ld_t>;
 
-class AddressCheckerModule {  
+class AddressCheckerModule : public Module {  
 public:
     // Явный конструктор с инициализацией настроек
     explicit AddressCheckerModule(const AddrCheckerSettings& settings) :
@@ -56,6 +55,12 @@ public:
     // Метод запуска модуля
     exit_module_status runProcess();
 
+protected:
+    // Проверка корректности настроек
+    void checkSettingsCorrectness() const;
+
+    // Хэдер дескриптора исключения.
+    std::string throw_desc = THROW_DESC;
 private:
     // Настройки модуля
     AddrCheckerSettings settings;
@@ -66,12 +71,6 @@ private:
     // Обработчик json файлов
     JsonHandler json_handler;
 
-    // Проверка наличия файла с формированием исключения
-    void checkFileExist(const Path&) const;
-    // Проверка наличия директории с формированием исключения
-    void checkDirExist(const Path& path) const;
-    // Проверка корректности настроек
-    void checkSettingsCorrectness() const;
     // Чтение буффера Pickle
     void readPickleBuffer();
     // Чтение JSON описания сети

@@ -52,58 +52,16 @@ exit_module_status PickleConverterModule::runProcess() {
     return ModuleExitStatus::SUCCESS;
 }
 
-// Очистка кэша потока ошибок. 
-// Необходимо для корректного вывода ошибок при каждом запуске
-void PickleConverterModule::clearStdErrCache(const Path& path) const {
-    // Если файл с кэшем найден, то удаляем его
-    bool is_cache_found = path.isExists();
-    if (is_cache_found) boost::filesystem::remove(path.c_str());
-}
-
-// Проверка наличия файла. 
-// В случае отсутствия выбрасывает исключение std::runtime_error
-// с описанием ошибки.
-void PickleConverterModule::checkFile(const Path& path) const {
-    // В случае отсутствия файла формируется исключение с описанием пути
-    if (!path.isExists()) {
-        std::string err_desc = THROW_DESC;
-        err_desc += "File ";
-        err_desc += path.c_str();
-        err_desc += " not found.\n";
-        throw std::runtime_error(err_desc.c_str());   
-    }
-}
-
-// Проверка настройки для выходного файла
-void PickleConverterModule::checkOutFileProperty(const Path& path) const {
-    // Директория ведущая к файлу должна существовать
-    if (!path.isExistsPathDirectory()) {
-        std::string err_desc = THROW_DESC;
-        err_desc += "Directory ";
-        err_desc += path.c_str();
-        err_desc += " with file not found.\n";
-        throw std::runtime_error(err_desc.c_str());
-    }
-
-    if (path.back() == SLASH) {
-        std::string err_desc = THROW_DESC;
-        err_desc += "Path ";
-        err_desc += path.c_str();
-        err_desc += " maybe only file path, not directory!\n";
-        throw std::runtime_error(err_desc.c_str());
-    }
-}
-
 // Проверка корректности настроек
 void PickleConverterModule::checkSettingsCorrectness() const {
     // Проверка наличия входного файла
-    checkFile(settings.pickle_file_path);
+    checkFileExist(settings.pickle_file_path);
 
     // Проверка корректности путей для выходных файлов
-    checkOutFileProperty(settings.out_log_path);
-    checkOutFileProperty(settings.reconstruct_log_path);
-    checkOutFileProperty(settings.stderr_log_path);
-    checkOutFileProperty(settings.weights_out_path);
+    checkDirExist(settings.out_log_path);
+    checkDirExist(settings.reconstruct_log_path);
+    checkDirExist(settings.stderr_log_path);
+    checkDirExist(settings.weights_out_path);
 }
 
 // Добавление аргументов к команде запуска

@@ -6,8 +6,8 @@
 #include <boost/filesystem/operations.hpp>
 #include <boost/process.hpp>
 #include <fstream>
+#include "../module.h"
 #include "../settings/pickleConverterSettings.h"
-#include "../moduleExitStatus.h"
 
 #define PYTHON_INTERPRETATOR_CMD "python"
 #define PYTHON_VERSION "3"
@@ -30,7 +30,7 @@
 *  Передача аргументов осуществляется запуском формированием соответствующей команды и запуском
 *  процесса.
 */
-class PickleConverterModule
+class PickleConverterModule : public Module
 {
 public:
     // Конструктор инициализирует настройки
@@ -43,26 +43,17 @@ public:
     // Метод запуска конвертации
     exit_module_status runProcess();
 
+protected:
+    // Проверка корректности настроек
+    void checkSettingsCorrectness() const;
+
+    std::string throw_desc = THROW_DESC;
+
 private:
     // Закрытый конструктор копирования
     PickleConverterModule& operator=(PickleConverterModule&) {return *this;};
     // Настройки модуля
     PickleConverterSettings settings;
-
-    // Очистка кэша потока ошибок. 
-    // Необходимо для корректного вывода ошибок при каждом запуске
-    void clearStdErrCache(const Path& path) const;
-
-    // Проверка наличия файла. 
-    // В случае отсутствия выбрасывает исключение std::runtime_error
-    // с описанием ошибки.
-    void checkFile(const Path& path) const;
-
-    // Проверка настройки для выходного файла
-    void checkOutFileProperty(const Path& path) const;
-
-    // Проверка корректности настроек
-    void checkSettingsCorrectness() const;
 
     // Добавление аргументов к команде запуска
     void addArguments(std::string& command) const;

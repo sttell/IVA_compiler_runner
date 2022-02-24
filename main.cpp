@@ -4,6 +4,7 @@
 #include <string>
 #include <exception>
 #include "include/compilerCore.h"
+#include "include/jsonHandler.h"
 
 void init_pipeline(Pipeline& pipe) {
     pipe.setModule(Modules::PickleConverter);
@@ -37,5 +38,12 @@ int main() {
     core.setPipeline(compiler_pipeline);
     core.runCompileProcess(settings);
     
+    JsonHandler jh;
+    boost::property_tree::ptree json;
+    Path test_input_json("test.json");
+    Path test_output_json("out_test.json");
+    jh.read(test_input_json, json);
+    jh.dump(test_output_json, json);
+
     return 0;
 }
