@@ -64,17 +64,17 @@ bool Path::isExistsPathDirectory() const {
 
 // Операторы присваивания
 
-Path& Path::operator=(const Path& copied) {
+const Path& Path::operator=(const Path& copied) {
     this->path_data = copied.path_data;
     return *this;
 }
 
-Path& Path::operator=(const std::string& copied) {
+const Path& Path::operator=(const std::string& copied) {
     this->path_data = copied;
     return *this;
 }
 
-Path& Path::operator=(const char* copied_ptr) {
+const Path& Path::operator=(const char* copied_ptr) {
     this->path_data = copied_ptr;
     return *this;
 }
@@ -99,20 +99,38 @@ std::string Path::compareStrings(std::string& left, const std::string& right) co
     return left + extractWithoutBeginSlash(right);
 }
 
-// Операторы сложения - склеивают 2 пути в один с учетом слэшей
+void Path::setComparedPathType(Path& result, const Path& p1, const Path& p2) const {
+    if (p1.type == p2.type) {
+        result.setType(p1.type);
+        return;
+    } else if(p2.type == PathType::File) {
+        result.setType(PathType::File);
+        return;
+    } else if (p2.type == PathType::Unknown || p1.type == PathType::Unknown) {
+        result.setType(PathType::Unknown);
+        return;
+    }
+    result.setType(PathType::Unknown);
+}
 
-Path& Path::operator+(const Path& copied) {
-    this->path_data += compareStrings(this->path_data, copied.path_data);
-    return *this;
+// Операторы сложения - склеивают 2 пути в один с учетом слэшей
+Path Path::operator+(const Path& right) {
+    Path result;
+    setComparedPathType(result, *this, right);
+    result.path_data = compareStrings(this->path_data, right.path_data);
+    return result;
 }
-Path& Path::operator+(const std::string& copied) {
-    this->path_data += compareStrings(this->path_data, copied);
-    return *this;
+Path Path::operator+(const std::string& right) {
+    Path result;
+    setComparedPathType(result, *this, right);
+    result.path_data = compareStrings(this->path_data, right);
+    return result;
 }
-Path& Path::operator+(const char* copied_ptr) {
-    std::string copied(copied_ptr);
-    this->path_data += compareStrings(this->path_data, copied);
-    return *this;
+Path Path::operator+(const char* right_ptr) {
+    Path result;
+    setComparedPathType(result, *this, right_ptr);
+    result.path_data = compareStrings(this->path_data, right_ptr);
+    return result;
 }
 
 // Вырезание директории из пути

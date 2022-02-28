@@ -39,14 +39,17 @@ public:
     bool isExistsPathDirectory() const;
 
     // Оператор присваивания на различные типы
-    Path& operator=(const std::string&);
-    Path& operator=(const Path&);
-    Path& operator=(const char*);
+    const Path& operator=(const std::string&);
+    const Path& operator=(const Path&);
+    const Path& operator=(const char*);
 
     // Оператор сложения на различные типы
-    Path& operator+(const Path&);
-    Path& operator+(const std::string&);
-    Path& operator+(const char*);
+    Path operator+(const Path&);
+    Path operator+(const std::string&);
+    Path operator+(const char*);
+
+    // Выставление типа нового пути при совмещении двух путей
+    void setComparedPathType(Path&, const Path&, const Path&) const;
 
     // Возвращает директорию указанную в пути к файлу
     std::string getDirectory() const;
