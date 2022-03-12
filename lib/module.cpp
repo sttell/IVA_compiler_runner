@@ -49,3 +49,22 @@ void Module::throwWithDesc(const std::string& description) const {
     err_desc += description;
     throw std::runtime_error(err_desc);
 }
+
+// Безопасная запись исключения в std error кэш
+void Module::dumpStdErrToLog(std::string err_desc, std::string stderr_log_path) const {
+    std::ofstream fout;
+    // Проверяем существования файла с кэшем. Если он существует, то дописывается
+    // иначе - создается
+    if (boost::filesystem::is_regular_file(stderr_log_path.c_str()))
+        fout.open(stderr_log_path.c_str(), std::ios_base::app);
+    else 
+        fout.open(stderr_log_path.c_str(), std::ios_base::out);
+    
+
+    // При успешном открытии записываем описание ошибки, иначе - отправляем в поток cerr
+    if (fout.is_open()) fout << err_desc << std::endl;
+    else                std::cerr << err_desc << std::endl;
+    
+    // Закрываем файл
+    fout.close();
+}
