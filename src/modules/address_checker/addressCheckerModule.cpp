@@ -21,26 +21,11 @@ exit_module_status AddressCheckerModule::runProcess() {
         dumpJSON();
     
     } catch (const std::runtime_error& e) {
-        // Пытаемся открыть лог из настроек.
-        std::string err_log_path = settings.stderr_log_path.c_str();
-        std::ofstream err_log;
-
-        try {
         
-            err_log.open(err_log_path);
-            if (!err_log.is_open()) throw std::runtime_error("Err log don't opened.");
+		// Выгружаем исключение в лог ошибок.
+        dumpStdErrToLog(e.what(), settings.stderr_log_path.c_str());
         
-        } catch (const std::exception& log_ex){
-        
-            err_log_path = DEFAUL_STDERR_PATH;
-            err_log.open(err_log_path);
-            err_log << log_ex.what() << std::endl;
-
-        }
-        // Записываем описание исключения
-        err_log << e.what() << std::endl;
-        err_log.close();
-        return ModuleExitStatus::EXCEPTION;
+		return ModuleExitStatus::EXCEPTION;
     }
     return ModuleExitStatus::SUCCESS;
 };

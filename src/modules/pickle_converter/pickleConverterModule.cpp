@@ -1,4 +1,5 @@
 #include "../../../include/modules/pickleConverterModule.h"
+#include <iostream>
 
 namespace bp = boost::process;
 
@@ -12,25 +13,20 @@ namespace bp = boost::process;
 exit_module_status PickleConverterModule::runProcess() {
     // Проверка ошибок в конфигурации модуля
     // При возникновении ошибки выводит описание в буффер
+    clearStdErrCache(settings.stderr_log_path);
+
     try {
 
         checkSettingsCorrectness();
     
     } catch (const std::runtime_error& e) {
     
-        std::ofstream err_log;
-        err_log.open(ERROR_BUFFER);
-        if (err_log.is_open()) {
-            err_log << e.what() << std::endl;
-        }
+        dumpStdErrToLog(e.what(), settings.stderr_log_path.c_str());
 
         // При возникновении исключения возвращается соответствующий статус
         return ModuleExitStatus::EXCEPTION;
     
     }
-    
-    // Очистка кэша буффера
-    clearStdErrCache(settings.stderr_log_path);
 
     // Формирование команды запуска и запуск конвертации
     std::string exec = formCommand();
@@ -40,12 +36,16 @@ exit_module_status PickleConverterModule::runProcess() {
         bp::std_out > settings.out_log_path.c_str(),
         bp::std_err > settings.stderr_log_path.c_str()
     );
-
+    
     // Если код возврата не нулевой, то возникло исключение при работе скрипта
     // Все исключительные ситуации записаны в соответствующий буффер, возвращаем
     // Соответствующий статус завершения
     if (return_code != 0) {
         return ModuleExitStatus::FAILTURE;
+    }
+
+    if (boost::filesystem::is_empty(settings.stderr_log_path.c_str())) {
+        clearStdErrCache(settings.stderr_log_path);
     }
 
     // Если все прошло хорошо, то возвращаем SUCCESS
