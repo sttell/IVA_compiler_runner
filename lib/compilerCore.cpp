@@ -124,6 +124,8 @@ void CompilerCore::runCompileProcess(const GlobalSettings& settings) {
         updateModuleStatus(current_module, ModuleExitStatus::WAIT);
         exit_module_status status = runModule(current_module, settings);
         updateModuleStatus(current_module, status);
+        if (status == ModuleExitStatus::EXCEPTION || status == ModuleExitStatus::FAILTURE)
+            break;
     }
 }
 
@@ -156,7 +158,8 @@ exit_module_status CompilerCore::runAddrCheckerModule(const AddrCheckerSettings&
 // Запуск модуля Compile Runner
 exit_module_status CompilerCore::runCompileRunnerModule(const CompileRunnerSettings& settings) const {
     std::cout << "Module Compile Runner runned" << std::endl;
-    return ModuleExitStatus::SUCCESS;
+    CompilerRunnerModule module(settings);
+    return module.runProcess();
 }
 
 // Запуск модуля Program Comparator

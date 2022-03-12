@@ -8,6 +8,7 @@
 #include "settings/globalSettings.h"
 #include "modules/pickleConverterModule.h"
 #include "modules/addressCheckerModule.h"
+#include "modules/compilerRunnerModule.h"
 #include "compileStatus.h"
 #include <vector>
 
