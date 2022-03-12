@@ -2,7 +2,7 @@
 #define _LIB_INCLDUE_SETTINGS_GLOBALSETTINGS_H_
 
 #include "compilerRunnerSettings.h"
-#include "fileCheckerSettings.h"
+#include "metadataCreatorSettings.h"
 #include "jsonConverterSettings.h"
 #include "pickleConverterSettings.h"
 #include "programComparatorSettings.h"
@@ -18,7 +18,7 @@ struct GlobalSettings {
     PickleConverterSettings pickle_converter;
     
     // Настройки модуля проверки наличия файлов
-    FileCheckerSettings file_checker;
+    MetadataCreatorSettings metadata_creator;
     
     // Настройки модуля проверки адресов весов
     AddrCheckerSettings addr_checker;

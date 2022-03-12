@@ -31,40 +31,42 @@ bool shift(module_t& pos) {
 exit_module_status CompilerCore::runModule(const module_t& module, const GlobalSettings& settings) {
      
      // Статус выполнения
-     exit_module_status status;
-     
+     exit_module_status status(ModuleExitStatus::NORUNNED);
+     std::unique_ptr<Module> current_module;
+
      // Оператор выбора соответствуюшего метода
      switch (module) {
-        case Modules::JsonConverter:
-            status = runJsonConverterModule(settings.json_converter);
-            break;
+        // case Modules::JsonConverter:
+        //     break;
         
         case Modules::PickleConverter:
-            status = runPickleConverterModule(settings.pickle_converter);
+            std::cout << "Pickle converter module" << std::endl;
+            current_module.reset(new PickleConverterModule(settings));
             break;
         
-        case Modules::FileChecker:
-            status = runFileCheckerModule(settings.file_checker);
-            break;
+        // case Modules::MetadataCreator:
+        //     break;
+        
         case Modules::AddrChecker:
-            status = runAddrCheckerModule(settings.addr_checker);
+            std::cout << "Address checker module" << std::endl;
+            current_module.reset(new AddressCheckerModule(settings));
             break;
+        
         case Modules::CompileRunner:
-            status = runCompileRunnerModule(settings.compiler_runner);
+            std::cout << "Compiler Runner module" << std::endl;
+            current_module.reset(new CompilerRunnerModule(settings));
             break;
         
-        case Modules::ProgramComparator:
-            status = runProgramComparatorModule(settings.program_comparator);
-            break;
-        
-        case Modules::ProgramRunner:
-            status = runProgramRunnerModule(settings.program_runner);
-            break;
-        
+        // case Modules::ProgramComparator:
+        //     break;
+                
         default:
             break;
         }
     
+    if (current_module.get() != nullptr) 
+        status = current_module.get()->runProcess();
+
     // По завершении отправляем статус выбранного модуля.
     return status;
 }
@@ -127,51 +129,6 @@ void CompilerCore::runCompileProcess(const GlobalSettings& settings) {
         if (status == ModuleExitStatus::EXCEPTION || status == ModuleExitStatus::FAILTURE)
             break;
     }
-}
-
-// Запуск модуля Json Converter
-exit_module_status CompilerCore::runJsonConverterModule(const JsonConverterSettings& settings) const {
-    std::cout << "Module JSON Converter runned" << std::endl;
-    return ModuleExitStatus::SUCCESS;
-}
-
-// Запуск модуля Pickle Converter
-exit_module_status CompilerCore::runPickleConverterModule(const PickleConverterSettings& settings) const {
-    std::cout << "Module Pickle Converter runned" << std::endl;
-    PickleConverterModule module(settings);
-    return module.runProcess();
-}
-
-// Запуск модуля File Checker
-exit_module_status CompilerCore::runFileCheckerModule(const FileCheckerSettings& settings) const {
-    std::cout << "Module File Checker runned" << std::endl;
-    return ModuleExitStatus::SUCCESS;
-}
-
-// Запуск модуля Addr Checker
-exit_module_status CompilerCore::runAddrCheckerModule(const AddrCheckerSettings& settings) const {
-    std::cout << "Module Addr Checker runned" << std::endl;
-    AddressCheckerModule module(settings);
-    return module.runProcess();
-}
-
-// Запуск модуля Compile Runner
-exit_module_status CompilerCore::runCompileRunnerModule(const CompileRunnerSettings& settings) const {
-    std::cout << "Module Compile Runner runned" << std::endl;
-    CompilerRunnerModule module(settings);
-    return module.runProcess();
-}
-
-// Запуск модуля Program Comparator
-exit_module_status CompilerCore::runProgramComparatorModule(const ProgramComparatorSettings& settings) const {
-    std::cout << "Module Program Comparator runned" << std::endl;
-    return ModuleExitStatus::SUCCESS;
-}
-
-// Запуск модуля Program Runner
-exit_module_status CompilerCore::runProgramRunnerModule(const ProgramRunnerSettings& settings) const {
-    std::cout << "Module Program Runner runned" << std::endl;
-    return ModuleExitStatus::SUCCESS;
 }
 
 // Запуск модуля Compile Status

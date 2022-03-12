@@ -2,7 +2,7 @@
 #define _INCLUDE_MODULES_COMPILERRUNNERMODULE_H_
 
 #include "../module.h"
-#include "../settings/compilerRunnerSettings.h"
+#include "../settings/globalSettings.h"
 #include "../path.h"
 #include <fstream>
 #include <iostream>
@@ -30,10 +30,11 @@ const std::string tpu_data_log = "./test_files/tpu_data";
 }
 
 // Класс отвечающий за запуск программы на компиляцию.
-class CompilerRunnerModule : Module {
+class CompilerRunnerModule : public Module {
 public:
     // Конструктор
-    explicit CompilerRunnerModule(const CompileRunnerSettings&);
+    explicit CompilerRunnerModule(const GlobalSettings& _settings) : 
+        settings(_settings.compiler_runner) {};
     
     // Деструктор
     ~CompilerRunnerModule() {};

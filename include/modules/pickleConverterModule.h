@@ -7,7 +7,7 @@
 #include <boost/process.hpp>
 #include <fstream>
 #include "../module.h"
-#include "../settings/pickleConverterSettings.h"
+#include "../settings/globalSettings.h"
 
 #define PYTHON_INTERPRETATOR_CMD "python"
 #define PYTHON_VERSION "3"
@@ -34,8 +34,8 @@ class PickleConverterModule : public Module
 {
 public:
     // Конструктор инициализирует настройки
-    explicit PickleConverterModule(const PickleConverterSettings& settings) : 
-        settings(settings){};
+    explicit PickleConverterModule(const GlobalSettings& _settings) : 
+        settings(_settings.pickle_converter){};
 
     // Базовый деструктор
     ~PickleConverterModule(){};

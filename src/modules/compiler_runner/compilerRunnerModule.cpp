@@ -1,10 +1,6 @@
 
 #include "../../../include/modules/compilerRunnerModule.h"
 
-// Конструктор класса
-CompilerRunnerModule::CompilerRunnerModule(const CompileRunnerSettings& settings) :
-    settings(settings) {};
-
 // Запуск процесса обработки модулем
 exit_module_status CompilerRunnerModule::runProcess() {
     
@@ -42,6 +38,7 @@ exit_module_status CompilerRunnerModule::runProcess() {
 
         return ModuleExitStatus::EXCEPTION;
     }
+    
 }
 
 // Проверка корректности настроек модуля
@@ -85,11 +82,14 @@ void CompilerRunnerModule::checkSettingsCorrectness() const {
         }
     
     // Проверка существования входных файлов
+    std::cout << settings.path_to_json.c_str() << std::endl;
+    std::cout << settings.path_to_weights.c_str() << std::endl;
     checkFileExist(settings.path_to_json);
     checkFileExist(settings.path_to_weights);
 
     // Проверка существования директорий для путей выходных файлов и директории компилятора
     checkDirExist(settings.compiler_dir);
+    std::cout << settings.out_log_path.c_str() << std::endl;
     checkDirExist(settings.out_log_path);
 }
 

@@ -2,7 +2,7 @@
 #define _INCLDUE_MODULES_ADDRESSCHECKERMODULE_H_
 
 #include "../module.h"
-#include "../settings/addrCheckerSettings.h"
+#include "../settings/globalSettings.h"
 #include "../jsonHandler.h"
 #include <boost/any.hpp>
 #include <boost/property_tree/ptree.hpp>
@@ -49,8 +49,8 @@ using pickle_buffer_t = std::unordered_map<std::string, pickle_ld_t>;
 class AddressCheckerModule : public Module {  
 public:
     // Явный конструктор с инициализацией настроек
-    explicit AddressCheckerModule(const AddrCheckerSettings& settings) :
-        settings(settings) {};
+    explicit AddressCheckerModule(const GlobalSettings& _settings) :
+        settings(_settings.addr_checker) {};
     
     // Метод запуска модуля
     exit_module_status runProcess();

@@ -11,6 +11,7 @@
 #include "modules/compilerRunnerModule.h"
 #include "compileStatus.h"
 #include <vector>
+#include <memory>
 
 /* Ядро для запуска пайплайна компиляции.
 *   
@@ -52,15 +53,6 @@ private:
 
     // Обновление current_module.
     bool getNextModule();
-
-    // Методы запуска различных модулей
-    exit_module_status runJsonConverterModule(const JsonConverterSettings&) const;
-    exit_module_status runPickleConverterModule(const PickleConverterSettings&) const;
-    exit_module_status runFileCheckerModule(const FileCheckerSettings&) const;
-    exit_module_status runAddrCheckerModule(const AddrCheckerSettings&) const;
-    exit_module_status runCompileRunnerModule(const CompileRunnerSettings&) const;
-    exit_module_status runProgramComparatorModule(const ProgramComparatorSettings&) const;
-    exit_module_status runProgramRunnerModule(const ProgramRunnerSettings&) const;
     
 public:
     // Возврат объекта ядра. Mayer Singletone

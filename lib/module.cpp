@@ -34,7 +34,7 @@ void Module::checkDirExist(const Path& path) const {
         throw std::runtime_error(err_desc.c_str());
     }
 
-    if (path.back() == SLASH) {
+    if (path.getType() == PathType::File && path.back() == SLASH) {
         std::string err_desc(throw_desc);
         err_desc += "Path ";
         err_desc += path.c_str();
