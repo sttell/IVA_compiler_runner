@@ -7,7 +7,7 @@
 #include <fstream>
 #include <string>
 
-#define THROW_DESC "JSON Handler Error. "
+#define JSON_HANDLER_THROW_DESC "JSON Handler Error. "
 
 // Тип узла в формате JSON
 enum class NodeType {

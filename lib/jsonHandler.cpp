@@ -9,7 +9,7 @@ void JsonHandler::read(const Path& input_path, boost::property_tree::ptree& buff
     }
     catch (std::exception const& e) {
         
-        std::string err_desc(THROW_DESC);
+        std::string err_desc(JSON_HANDLER_THROW_DESC);
         err_desc += e.what();
         throw std::runtime_error(err_desc.c_str());
     }
@@ -25,7 +25,7 @@ void JsonHandler::dump(const Path& out_path, const boost::property_tree::ptree& 
     if (fout.is_open())
         dumpNode(buffer, fout);
     else {
-        std::string err_desc(THROW_DESC);
+        std::string err_desc(JSON_HANDLER_THROW_DESC);
         err_desc += "Cannot open file: ";
         err_desc += out_path.c_str();
         throw std::runtime_error(err_desc);
@@ -149,7 +149,7 @@ void JsonHandler::dumpNode(const boost::property_tree::ptree& node, std::ofstrea
     
     default:
         // При неизвестном типе генерируем исключение
-        std::string err_desc(THROW_DESC);
+        std::string err_desc(JSON_HANDLER_THROW_DESC);
         err_desc += "Unknown Node Type in JSON dumpNode function.";
         throw std::runtime_error(err_desc);
         break;

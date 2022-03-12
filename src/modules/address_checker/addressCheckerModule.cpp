@@ -23,7 +23,9 @@ exit_module_status AddressCheckerModule::runProcess() {
     } catch (const std::runtime_error& e) {
         
 		// Выгружаем исключение в лог ошибок.
-        dumpStdErrToLog(e.what(), settings.stderr_log_path.c_str());
+		std::string err_desc(ADDR_CHECKER_THROW_DESC);
+		err_desc += e.what();
+        dumpStdErrToLog(err_desc, settings.stderr_log_path.c_str());
         
 		return ModuleExitStatus::EXCEPTION;
     }
@@ -85,7 +87,7 @@ void AddressCheckerModule::readPickleBuffer() {
 	}
 	catch (std::exception const& e)
 	{
-		std::string err_desc = THROW_DESC;
+		std::string err_desc = ADDR_CHECKER_THROW_DESC;
 		err_desc += e.what();
 		throw std::runtime_error(err_desc.c_str());
 	}
@@ -98,7 +100,7 @@ void AddressCheckerModule::readJSON() {
 	}
 	catch (std::exception const& e)
 	{
-		std::string err_desc = THROW_DESC;
+		std::string err_desc = ADDR_CHECKER_THROW_DESC;
 		err_desc += e.what();
 		throw std::runtime_error(err_desc.c_str());
 	}
@@ -111,7 +113,7 @@ void AddressCheckerModule::dumpJSON() const {
 	}
 	catch (std::exception const& e)
 	{
-		std::string err_desc = THROW_DESC;
+		std::string err_desc = ADDR_CHECKER_THROW_DESC;
 		err_desc += e.what();
 		throw std::runtime_error(err_desc.c_str());
 	}

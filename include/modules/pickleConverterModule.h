@@ -16,7 +16,7 @@
 #define INPUT_ARG_NAME "input_path="
 #define OUTPUT_ARG_NAME "output_path="
 #define RECONSTRUCT_ARG_NAME "reconstruct_pickle_path="
-#define THROW_DESC "Pickle converter module error. "
+#define PICKLE_CONVERTER_THROW_DESC "Pickle converter module error. "
 #define ERROR_BUFFER "logs/pickle_converter_stderr.log"
 
 
@@ -47,7 +47,7 @@ protected:
     // Проверка корректности настроек
     void checkSettingsCorrectness() const;
 
-    std::string throw_desc = THROW_DESC;
+    std::string throw_desc = PICKLE_CONVERTER_THROW_DESC;
 
 private:
     // Закрытый конструктор копирования

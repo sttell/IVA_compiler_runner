@@ -20,7 +20,7 @@
 // Стандартный путь к логу ошибок модуля
 #define DEFAUL_STDERR_PATH "logs/addr_checker_err.log"
 
-#define THROW_DESC "Address Checker Module error. "
+#define ADDR_CHECKER_THROW_DESC "Address Checker Module error. "
 
 // Формат хранения JSON данных
 using json_buffer_t = boost::property_tree::ptree;
@@ -60,7 +60,7 @@ protected:
     void checkSettingsCorrectness() const;
 
     // Хэдер дескриптора исключения.
-    std::string throw_desc = THROW_DESC;
+    std::string throw_desc = ADDR_CHECKER_THROW_DESC;
 private:
     // Настройки модуля
     AddrCheckerSettings settings;
