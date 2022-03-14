@@ -44,9 +44,9 @@ public:
     const Path& operator=(const char*);
 
     // Оператор сложения на различные типы
-    Path operator+(const Path&);
-    Path operator+(const std::string&);
-    Path operator+(const char*);
+    Path operator+(const Path&) const;
+    Path operator+(const std::string&) const;
+    Path operator+(const char*) const;
 
     // Выставление типа нового пути при совмещении двух путей
     void setComparedPathType(Path&, const Path&, const Path&) const;
@@ -84,7 +84,7 @@ private:
     std::string extractWithoutBeginSlash(const std::string&) const;
     
     // Склейка двух строк определенным для пути образом
-    std::string compareStrings(std::string&, const std::string&) const;
+    std::string compareStrings(std::string, std::string) const;
     
     // Путь
     std::string path_data;
