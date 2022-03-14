@@ -94,7 +94,7 @@ void Path::extendSlashInEnd(std::string& str) const {
 }
 
 // Соединение двух строк. Левая часть дополняется слэшем, правая удаляет ведущий слэш
-std::string Path::compareStrings(std::string& left, const std::string& right) const {
+std::string Path::compareStrings(std::string left, std::string right) const {
     extendSlashInEnd(left);
     return left + extractWithoutBeginSlash(right);
 }
@@ -114,19 +114,19 @@ void Path::setComparedPathType(Path& result, const Path& p1, const Path& p2) con
 }
 
 // Операторы сложения - склеивают 2 пути в один с учетом слэшей
-Path Path::operator+(const Path& right) {
+Path Path::operator+(const Path& right) const {
     Path result;
     setComparedPathType(result, *this, right);
     result.path_data = compareStrings(this->path_data, right.path_data);
     return result;
 }
-Path Path::operator+(const std::string& right) {
+Path Path::operator+(const std::string& right) const {
     Path result;
     setComparedPathType(result, *this, right);
     result.path_data = compareStrings(this->path_data, right);
     return result;
 }
-Path Path::operator+(const char* right_ptr) {
+Path Path::operator+(const char* right_ptr) const {
     Path result;
     setComparedPathType(result, *this, right_ptr);
     result.path_data = compareStrings(this->path_data, right_ptr);
