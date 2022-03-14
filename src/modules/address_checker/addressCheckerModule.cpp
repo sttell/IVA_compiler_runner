@@ -107,7 +107,7 @@ void AddressCheckerModule::readJSON() {
 }
 
 // Запись корректированного JSON файла сети
-void AddressCheckerModule::dumpJSON() const {
+void AddressCheckerModule::dumpJSON() {
 	try {
 		json_handler.dump(settings.out_json_path, json_buffer);
 	}

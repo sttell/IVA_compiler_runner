@@ -1,5 +1,12 @@
 #include "../include/jsonHandler.h"
 
+std::string indent(int n) {
+    std::string ind;
+    if (n < 0) throw std::runtime_error("JSON Write: Indentation level very small.");
+    for(size_t i=0; i < n; i++) ind += " ";
+    return ind;
+}
+
 // Считывание JSON файла в буффер по ссылке.
 void JsonHandler::read(const Path& input_path, boost::property_tree::ptree& buffer) const {
     
@@ -16,14 +23,17 @@ void JsonHandler::read(const Path& input_path, boost::property_tree::ptree& buff
 };
 
 // Запись буффера в JSON формате
-void JsonHandler::dump(const Path& out_path, const boost::property_tree::ptree& buffer) const {
+void JsonHandler::dump(const Path& out_path, const boost::property_tree::ptree& buffer, int indent) {
+    
+    if (indent >= 0) indentation_shift = indent;
+    
     // Открытие файла
     std::ofstream fout(out_path.c_str());
 
     // При возникновении ошибки открытия выбрасываем исключение.
     // В случае нормально работы - выгружаем root узел
     if (fout.is_open())
-        dumpNode(buffer, fout);
+        dumpNode(buffer, fout, NodeType::Root);
     else {
         std::string err_desc(JSON_HANDLER_THROW_DESC);
         err_desc += "Cannot open file: ";
@@ -61,7 +71,7 @@ PropertyType JsonHandler::getPropertyType(const std::string& property_str) const
             is_point_comparator
         ) < 2
     );
-    
+
     if (digit_condition)
         return PropertyType::Number;
     
@@ -94,79 +104,98 @@ NodeType JsonHandler::getNodeType(const boost::property_tree::ptree& node) const
 // Запись имени узла при его наличии
 void JsonHandler::dumpNodeName(const std::string& name, std::ofstream& fout) const {
     // Добавление кавычек для строковых аргументов
-    fout << "\"" + name + "\" : ";
+    fout << indent(indentation_level) << "\"" + name + "\" : ";
 }
 
 // Запись узла-хэш таблицы
-void JsonHandler::dumpMap(const boost::property_tree::ptree& node, std::ofstream& fout) const {
+void JsonHandler::dumpMap(const boost::property_tree::ptree& node, std::ofstream& fout, NodeType parent_type) {
 
     // Ведется подсчет пройденных узлов. Для всех кроме последнего выставляется запятая в конце.
-    fout << "\n{\n";
+    if (parent_type == NodeType::List) fout << indent(indentation_level);
+    fout << "{\n";
     int current_child = 0;
     for (const auto& child : node) {
 
         current_child++;
         // Запись имени узла и рекурсивный вызов записи дочерних узлов
+        indentation_level += indentation_shift;
         dumpNodeName(child.first, fout);
-        dumpNode(child.second, fout);
-
+        dumpNode(child.second, fout, NodeType::Map);
+        
         if (current_child != node.size()) fout << ", \n";
         else                              fout << "\n";
+        indentation_level -= indentation_shift;
     }
-    fout << "}";
+    fout << indent(indentation_level) << "}";
 }
 
 // Запись узла-списка
-void JsonHandler::dumpList(const boost::property_tree::ptree& node, std::ofstream& fout) const {
+void JsonHandler::dumpList(const boost::property_tree::ptree& node, std::ofstream& fout, NodeType parent_type) {
     // Подобно записи хэш-таблицы, но без записи имени узла
-    fout << "[";
+    if (parent_type == NodeType::List) fout << indent(indentation_level);
+    fout << "[\n";
+
     int current_child = 0;
     for (const auto& child : node) {
 
         current_child++;
-        
-        dumpNode(child.second, fout);
-        
-        if (current_child != node.size()) fout << ", ";
+        indentation_level += indentation_shift;
+        dumpNode(child.second, fout, NodeType::List);
+
+        if (current_child != node.size()) fout << ", \n";
+        else                              fout << "\n";
+        indentation_level -= indentation_shift;
     }
-    fout << "]";
+    fout << indent(indentation_level) << "]";
+}
+
+bool JsonHandler::isHardWriteElement(const std::string& str) const {
+    return str.find(JSON_HANDLER_HW_SPECIFIER) != std::string::npos;
 }
 
 // Запись конечного поля
-void JsonHandler::dumpProperty(const boost::property_tree::ptree& node, std::ofstream& fout) const {
+void JsonHandler::dumpProperty(const boost::property_tree::ptree& node, std::ofstream& fout, NodeType parent_type) const {
     // Определяем тип данных записи. В зависимости от типа предаем на запись определенным образом
     std::string node_data = node.data();
+    bool is_hard_write_mode = isHardWriteElement(node_data);
     PropertyType ptype = getPropertyType(node_data);
+    
+    std::string local_indent("");
+
+    if (parent_type == NodeType::List) local_indent += indent(indentation_level);
 
     if (ptype == PropertyType::Number || ptype == PropertyType::Bool) {
     
-        fout << node_data;
+        fout << local_indent << node_data;
     
+    } else if (is_hard_write_mode) {
+        size_t specifier_start_idx = node_data.find(JSON_HANDLER_HW_SPECIFIER);
+        std::string tmp = node_data.substr(0, specifier_start_idx);
+        fout << local_indent << tmp;
     } else {
     
-        fout << "\"" << node_data << "\"";
+        fout << local_indent << "\"" << node_data << "\"";
     
     }
 }
 
 // Запись узла
-void JsonHandler::dumpNode(const boost::property_tree::ptree& node, std::ofstream& fout) const {
+void JsonHandler::dumpNode(const boost::property_tree::ptree& node, std::ofstream& fout, NodeType parent_type) {
     // Определяем тип узла
     NodeType node_type = getNodeType(node);
-    
     // Передаем рекурсивному обработчику в зависимости от типа
     switch (node_type) {
 
     case NodeType::Value:
-        dumpProperty(node, fout);
+        dumpProperty(node, fout, parent_type);
         break;
 
     case NodeType::List:
-        dumpList(node, fout);
+        dumpList(node, fout, parent_type);
         break;
     
     case NodeType::Map:
-        dumpMap(node, fout);
+        dumpMap(node, fout, parent_type);
         break;
     
     default:
