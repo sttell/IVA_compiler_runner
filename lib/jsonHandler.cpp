@@ -37,12 +37,34 @@ void JsonHandler::dump(const Path& out_path, const boost::property_tree::ptree& 
 // Определение типа записываемого поля
 PropertyType JsonHandler::getPropertyType(const std::string& property_str) const {
 
-    if (!property_str.empty() && 
-        std::find_if(property_str.begin(), property_str.end(), 
-            [](unsigned char property_str) { 
-                return !(std::isdigit(property_str) || property_str == '.'); 
-                }) == property_str.end())
+    auto digits_and_points_comp = [](unsigned char property_str) { 
+        return !(std::isdigit(property_str) || property_str == '.'); 
+    };
+    auto is_point_comparator = [](unsigned char sym) { return sym == '.'; };
+    // Если
+    // Это не пустая строка
+    bool digit_condition = !property_str.empty();
+    // Все символы - цифры или .
+    digit_condition = digit_condition && (
+        std::find_if(
+            property_str.begin(), 
+            property_str.end(), 
+            digits_and_points_comp
+            ) == property_str.end()
+    );
+    
+    // Количество точек не больше 1
+    digit_condition = digit_condition && (
+        std::count_if(
+            property_str.begin(), 
+            property_str.end(),
+            is_point_comparator
+        ) < 2
+    );
+    
+    if (digit_condition)
         return PropertyType::Number;
+    
     if (property_str == "true" || property_str == "false") 
         return PropertyType::Bool;
     
