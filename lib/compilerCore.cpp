@@ -59,8 +59,10 @@ exit_module_status CompilerCore::runModule(const module_t& module, const GlobalS
             current_module.reset(new CompilerRunnerModule(settings));
             break;
         
-        // case Modules::ProgramComparator:
-        //     break;
+        case Modules::ProgramComparator:
+            std::cout << "Program comparator module" << std::endl;
+            current_module.reset(new ProgramComparatorModule(settings));
+            break;
                 
         default:
             break;

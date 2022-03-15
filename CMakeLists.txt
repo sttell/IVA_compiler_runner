@@ -18,4 +18,4 @@ add_subdirectory(src)
 add_executable(main main.cpp)		# Создает исполняемый файл с именем main
 									# из исходника main.cpp
 
-target_link_libraries(main compiler_lib pickle_converter_lib address_checker_lib compiler_runner_lib ${Boost_LIBRARIES})
+target_link_libraries(main compiler_lib pickle_converter_lib address_checker_lib compiler_runner_lib metadata_creator_lib program_comparator_lib ${Boost_LIBRARIES})

@@ -9,6 +9,8 @@
 #include "modules/pickleConverterModule.h"
 #include "modules/addressCheckerModule.h"
 #include "modules/compilerRunnerModule.h"
+#include "modules/programComparatorModule.h"
+#include "modules/metadataCreatorModule.h"
 #include "compileStatus.h"
 #include <vector>
 #include <memory>

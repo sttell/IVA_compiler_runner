@@ -12,7 +12,7 @@ exit_module_status MetadataCreatorModule::runProcess() {
         checkSettingsCorrectness();
 
         // Дескрипы файлов программы
-        std::vector<IMCM::ProgramFileDesc> file_descriptors;
+        std::vector<ProgramFileDesc> file_descriptors;
         
         // Инициализация дескрипторов файлов программы
         fillProgramFileDescriptors(file_descriptors);
@@ -69,13 +69,13 @@ void MetadataCreatorModule::checkMapSizeCorrect(const MapSize& map) const {
 
 // Хаполнение списка дескрипторов файлов в соответствии со списком IMCM::program_filenames
 void MetadataCreatorModule::fillProgramFileDescriptors(
-    std::vector<IMCM::ProgramFileDesc>& file_descriptors
+    std::vector<ProgramFileDesc>& file_descriptors
 ) const {
     // Приводим массив дескрипторов к соответствующему размеру
     file_descriptors.resize(IMCM::program_filenames.size());
 
     // Проходимся по всем дескрипторам и заполняем их информацией
-    for (size_t idx = 0; IMCM::ProgramFileDesc& descriptor : file_descriptors) {
+    for (size_t idx = 0; ProgramFileDesc& descriptor : file_descriptors) {
         // Имя файла
         descriptor.filename = IMCM::program_filenames[idx];
         
@@ -97,12 +97,12 @@ void MetadataCreatorModule::fillProgramFileDescriptors(
 
 // Проверка корректности заполнения дескрипторов файлов программы.
 void MetadataCreatorModule::checkProgramFileDescriptorsCorrectness(
-    const std::vector<IMCM::ProgramFileDesc>& file_descriptors
+    const std::vector<ProgramFileDesc>& file_descriptors
 ) const{
     // Подсчет количества не найленных файлов
     size_t count_of_not_exists_files = std::count_if(
         file_descriptors.begin(), file_descriptors.end(), 
-        [](const IMCM::ProgramFileDesc& desc) { return !desc.is_exist; }
+        [](const ProgramFileDesc& desc) { return !desc.is_exist; }
     );
 
     // Если хотя бы 1 не найден, то выбрасываем исключение.
@@ -171,7 +171,7 @@ void MetadataCreatorModule::createHardwareParamsBlock(
 
 // Создание блока с описанием файла с инструкциями для одного файла по дескриптору.
 void MetadataCreatorModule::createOneInstructionBlock(
-    const IMCM::ProgramFileDesc& file_descriptor,
+    const ProgramFileDesc& file_descriptor,
     ptree& block
 ) const {
     block.put("size", file_descriptor.size);
@@ -180,12 +180,12 @@ void MetadataCreatorModule::createOneInstructionBlock(
 
 // Создание блока с описанием файлов с инструкциями по списку дескрипторов файлов.
 void MetadataCreatorModule::createInstructionsBlock(
-    const std::vector<IMCM::ProgramFileDesc>& file_descriptors, 
+    const std::vector<ProgramFileDesc>& file_descriptors, 
     ptree& instructions_block
 ) const {
     
     // Компаратор для проверки на принадлежность к CMD файлам
-    auto is_cmd_comparator = [](const IMCM::ProgramFileDesc& file_desc) { return IMCM::is_cmd_file(file_desc.filename); };
+    auto is_cmd_comparator = [](const ProgramFileDesc& file_desc) { return IMCM::is_cmd_file(file_desc.filename); };
     
     // Подсчет количества файлов CMD с помощью компаратора
     size_t num_instruction_files = std::count_if(file_descriptors.begin(), file_descriptors.end(), is_cmd_comparator);
@@ -206,16 +206,16 @@ void MetadataCreatorModule::createInstructionsBlock(
     
 // Создание блока с описанием файлов с константами по списку дескрипторов файлов.
 void MetadataCreatorModule::createConstantsBlock(
-    const std::vector<IMCM::ProgramFileDesc>& file_descriptors, 
+    const std::vector<ProgramFileDesc>& file_descriptors, 
     ptree& constants_block
 ) const {
     // Тело блока
     ptree block_body;
     // Дескрипторы файлов с константами
-    std::vector<IMCM::ProgramFileDesc> constants_descriptors;
+    std::vector<ProgramFileDesc> constants_descriptors;
 
     // Заполняем дескрипторы файлов с константами. Файлы с константами - все, что не являются CMD файлами.
-    for (const IMCM::ProgramFileDesc& descriptor : file_descriptors) {
+    for (const ProgramFileDesc& descriptor : file_descriptors) {
         if (!IMCM::is_cmd_file(descriptor.filename)) {
             constants_descriptors.push_back(descriptor);
         }
@@ -227,7 +227,7 @@ void MetadataCreatorModule::createConstantsBlock(
         
 
     // Проходимся по дейскрипторам файлов с константами и заполняем нужную информацию в подблоки
-    for (size_t idx=0; IMCM::ProgramFileDesc& file_descriptor : constants_descriptors) {
+    for (size_t idx=0; ProgramFileDesc& file_descriptor : constants_descriptors) {
         ptree constant_files_block;
         ptree constant_space;
         constant_space.put("address", 0);
@@ -372,7 +372,7 @@ void MetadataCreatorModule::createOutputsBlock(ptree& outputs_block) const {
 
 // Заполнение блока со схемой DDR. 
 void MetadataCreatorModule::createRamSchemeBlock(
-    const std::vector<IMCM::ProgramFileDesc>& file_descriptors, 
+    const std::vector<ProgramFileDesc>& file_descriptors, 
     ptree& ram_scheme_block
 ) const {
     // Подблоки с различными типами пространств DDR
@@ -380,7 +380,7 @@ void MetadataCreatorModule::createRamSchemeBlock(
 
     // Определение размера файла с константами
     int constant_file_size = 0;
-    for (const IMCM::ProgramFileDesc& descriptor : file_descriptors) {
+    for (const ProgramFileDesc& descriptor : file_descriptors) {
         if (!IMCM::is_cmd_file(descriptor.filename)) {
             constant_file_size = descriptor.size;
             break;
@@ -418,7 +418,7 @@ void MetadataCreatorModule::createRamSchemeBlock(
 // Заполнение тела JSON описания метаданных.
 void MetadataCreatorModule::createMetadataBody(
     IMCM::json_body_t& metadata, 
-    const std::vector<IMCM::ProgramFileDesc>& file_descriptors, 
+    const std::vector<ProgramFileDesc>& file_descriptors, 
     const TPUDescriptor& tpu_descriptor
 ) const {
     ptree hardware_parameters_block; // Блок с описанием параметров устройоства

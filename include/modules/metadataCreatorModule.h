@@ -6,6 +6,7 @@
 #include "../path.h"
 #include "../tpuDescriptor.h"
 #include "../jsonHandler.h"
+#include "../programFilesDescriptor.h"
 #include <map>
 #include <fstream>
 #include <iostream>
@@ -27,39 +28,6 @@ using json_body_t = ptree;
 
 static std::vector<std::string> program_filenames {
     "cmd0.bin", "cmd1.bin", "cmd2.bin", "cmd3.bin", "cmd4.bin", "cmd5.bin", "hpm_coeff"
-};
-
-// Дескриптор описывающий файлы программы
-// Используется для удобного кэширования информации о файлах
-// программы.
-struct ProgramFileDesc {
-
-public:
-    // Конструкторы
-    ProgramFileDesc() {init("Unknown file", 0, false, "/uknown_path"); }
-    ProgramFileDesc(const std::string& filename) { init(filename, 0, false, "/unknown_path"); }
-    ProgramFileDesc(const std::string& filename, const Path& path) { init(filename, 0, false, path); }
-    ProgramFileDesc(const std::string& filename, const Path& path, bool is_exist) { init(filename, 0, is_exist, path); }
-    ProgramFileDesc(const std::string& filename, const Path& path, bool is_exist, size_t size) { init(filename, size, is_exist, path); }
-
-    // Имя файла
-    std::string filename;
-    // Размер файла в байтах
-    size_t size;
-    // Фалг присутствия файла по указанному пути
-    bool is_exist;
-    // Путь к файлу в ОС
-    Path path;
-
-private:
-    // Внутренняя функция для инициализации параметров конструкторами
-    void init(const std::string& _filename, size_t _size, 
-              bool _is_exist, const Path& _file_path) {
-
-        filename = _filename; size = _size;
-        is_exist = _is_exist; path = _file_path;
-    
-    }
 };
 
 // Проверка на принадлежность файла к файлам с инструкциями(cmd.bin file)
@@ -111,25 +79,25 @@ private:
     void checkMapSizeCorrect(const MapSize& map) const;
 
     // Хаполнение списка дескрипторов файлов в соответствии со списком IMCM::program_filenames
-    void fillProgramFileDescriptors(std::vector<IMCM::ProgramFileDesc>& file_descriptors) const;
+    void fillProgramFileDescriptors(std::vector<ProgramFileDesc>& file_descriptors) const;
 
     // Проверка корректности заполнения дескрипторов файлов программы.
-    void checkProgramFileDescriptorsCorrectness(const std::vector<IMCM::ProgramFileDesc>& file_descriptors) const;
+    void checkProgramFileDescriptorsCorrectness(const std::vector<ProgramFileDesc>& file_descriptors) const;
 
     // Создания JSON блока с параметрами устройства по дескриптору устройства.
     void createHardwareParamsBlock(const TPUDescriptor& tpu_descriptor, 
         ptree& hardware_parameters_block) const;
 
     // Создание блока с описанием файла с инструкциями для одного файла по дескриптору.
-    void createOneInstructionBlock(const IMCM::ProgramFileDesc& file_descriptor, 
+    void createOneInstructionBlock(const ProgramFileDesc& file_descriptor, 
         ptree& block) const;
 
     // Создание блока с описанием файлов с инструкциями по списку дескрипторов файлов.
-    void createInstructionsBlock(const std::vector<IMCM::ProgramFileDesc>& file_descriptors, 
+    void createInstructionsBlock(const std::vector<ProgramFileDesc>& file_descriptors, 
         ptree& instructions_block) const;
     
     // Создание блока с описанием файлов с константами по списку дескрипторов файлов.
-    void createConstantsBlock(const std::vector<IMCM::ProgramFileDesc>& file_descriptors, 
+    void createConstantsBlock(const std::vector<ProgramFileDesc>& file_descriptors, 
         ptree& constants_block) const;
 
     // Создание блока с описанием параметров входного тензора
@@ -139,12 +107,12 @@ private:
     void createOutputsBlock(ptree& outputs_block) const;
 
     // Заполнение блока со схемой DDR. 
-    void createRamSchemeBlock(const std::vector<IMCM::ProgramFileDesc>& file_descriptors, 
+    void createRamSchemeBlock(const std::vector<ProgramFileDesc>& file_descriptors, 
         ptree& ram_scheme_block) const;
 
     // Заполнение тела JSON описания метаданных.
     void createMetadataBody(IMCM::json_body_t& metadata, 
-                            const std::vector<IMCM::ProgramFileDesc>& file_descriptors, 
+                            const std::vector<ProgramFileDesc>& file_descriptors, 
                             const TPUDescriptor& tpu_descriptor) const;
 
     // Настройки модуля

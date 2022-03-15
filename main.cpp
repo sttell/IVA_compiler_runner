@@ -12,7 +12,8 @@ void init_pipeline(Pipeline& pipe) {
     // pipe.setModule(Modules::AddrChecker);
     // pipe.setModule(Modules::PickleConverter);
     // pipe.setModule(Modules::CompileRunner);
-    pipe.setModule(Modules::MetadataCreator);
+    // pipe.setModule(Modules::MetadataCreator);
+    pipe.setModule(Modules::ProgramComparator);
 }
 
 void init_global_settings(GlobalSettings& settings) {
@@ -53,6 +54,12 @@ void init_global_settings(GlobalSettings& settings) {
     settings.metadata_creator.out_log_path = current_dir + "/log/metadata_creator.log";
     settings.metadata_creator.stderr_log_path = current_dir + "/log/metadata_creator_stderr.log";
 
+    settings.program_comparator.is_dump_test_data = false;
+    settings.program_comparator.compiler_dir = compiler_dir;
+    settings.program_comparator.out_log_path = current_dir + "/logs/program_comparator.log";
+    settings.program_comparator.program_archive_name = "program.zip";
+    settings.program_comparator.program_out_dir_path = "/home/ilya/projects/cpp/TestDir/program_comparator_test";
+    settings.program_comparator.stderr_log_path = current_dir + "/logs/program_comparator_stderr.log";
 }
 
 int main() {
