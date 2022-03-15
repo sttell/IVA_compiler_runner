@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.0) # Проверка версии CMake.
 									# старее указаной, произайдёт аварийный выход.
 
 
-
+set (CMAKE_CXX_STANDARD 20)
 find_package(Boost COMPONENTS program_options filesystem system thread)
 
 include_directories(${Boost_INCLUDE_DIRS})

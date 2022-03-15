@@ -40,7 +40,7 @@ public:
     size_t cu_argv_number;
     double me_frequency;
     double ddr_frequency;
-    double profiler_time_resolution;
+    std::string profiler_time_resolution;
     double dtu_timing_initial;
     double dtu_timing_latency;
     double me_timing_initial_ff;
@@ -105,7 +105,7 @@ private:
         cu_argv_number             = 8;
         me_frequency               = 1000000000.0;
         ddr_frequency              = 800000000.0;
-        profiler_time_resolution   = 1e-06;
+        profiler_time_resolution   = "1e-06_![hardwrite]";
         dtu_timing_initial         = 62.;
         dtu_timing_latency         = 18.;
         me_timing_initial_ff       = 50.;
@@ -148,7 +148,7 @@ private:
         cu_argv_number             = 8;
         me_frequency               = 200000000.0;
         ddr_frequency              = 200000000.0;
-        profiler_time_resolution   = 1e-06;
+        profiler_time_resolution   = "1e-06_![hardwrite]";
         dtu_timing_initial         = 62.;
         dtu_timing_latency         = 18.;
         me_timing_initial_ff       = 50.;
@@ -192,7 +192,7 @@ private:
         cu_argv_number             = 8;
         me_frequency               = 1000000000.0;
         ddr_frequency              = 800000000.0;
-        profiler_time_resolution   = 1e-06;
+        profiler_time_resolution   = "1e-06_![hardwrite]";
         dtu_timing_initial         = 62.;
         dtu_timing_latency         = 18.;
         me_timing_initial_ff       = 50.;

@@ -76,7 +76,7 @@ private:
     // Чтение JSON описания сети
     void readJSON();
     // Запись JSON с корректированными данными
-    void dumpJSON() const;
+    void dumpJSON();
     // TODO Коррекция данных
     void correctData();
 };

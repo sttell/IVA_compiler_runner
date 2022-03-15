@@ -66,8 +66,6 @@ public:
     char front() const;
     size_t size() const;
 
-    constexpr operator const char*() { return path_data.c_str(); }
-
 private:
     // Проверка наличия слэшей в пути
     bool isSlashInPath() const;

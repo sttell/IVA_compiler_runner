@@ -44,8 +44,10 @@ exit_module_status CompilerCore::runModule(const module_t& module, const GlobalS
             current_module.reset(new PickleConverterModule(settings));
             break;
         
-        // case Modules::MetadataCreator:
-        //     break;
+        case Modules::MetadataCreator:
+            std::cout << "Metadata creator module" << std::endl;
+            current_module.reset(new MetadataCreatorModule(settings));
+            break;
         
         case Modules::AddrChecker:
             std::cout << "Address checker module" << std::endl;

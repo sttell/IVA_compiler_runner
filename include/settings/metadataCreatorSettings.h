@@ -8,27 +8,44 @@
 
 #include <cinttypes>
 
+using axes_padding_t = int16_t;
+
+// Описание паддингов в доль одной оси. Хранит пару с правым и левым значением.
+struct AxesPadding {
+    AxesPadding() : left(0), right(0) {};
+    AxesPadding(uint8_t _left, uint8_t _right) : left(_left), right(_right) {};
+
+    axes_padding_t left;
+    axes_padding_t right;
+};
+
+// Паддинги тензора. Хранит 4 пары паддингов для тензора изображений
 struct Paddings {
-    Paddings() : left(0), right(0), down(0), up(0) { };
-    Paddings(uint8_t l, uint8_t r, uint8_t d, uint8_t u) : 
-        left(l), right(r), down(d), up(u) { };
+    Paddings() {};
+    Paddings(axes_padding_t Bl, axes_padding_t Br,
+             axes_padding_t Xl, axes_padding_t Xr,
+             axes_padding_t Yl, axes_padding_t Yr,
+             axes_padding_t Ll, axes_padding_t Lr) : 
+             B(Bl, Br), X(Xr, Xl), Y(Yl, Yr), L(Ll, Lr) {};
     
-    uint8_t left;
-    uint8_t right;
-    uint8_t down;
-    uint8_t up;   
+    AxesPadding B;
+    AxesPadding X;
+    AxesPadding Y;
+    AxesPadding L;  
 };
 
 // Структура для хранения настроек модуля File Checker Module
 struct MetadataCreatorSettings
 {
     MetadataCreatorSettings() : 
-        paddings_in(0, 0, 0, 0), paddings_out(0, 0, 0, 0),
+        paddings_in(), paddings_out(),
         input_map(), output_map(),
         compiler_dir(PathType::Directory),
         device_type(Device::MOBILE),
         out_log_path(PathType::File),
-        stderr_log_path(PathType::File) {};
+        stderr_log_path(PathType::File),
+        ip_version("unknown ip version"),
+        api_version("unknown api version") {};
     
     // Паддинги для входной и выходной карт признаков
     Paddings paddings_in;
@@ -49,6 +66,16 @@ struct MetadataCreatorSettings
 
     // Путь к логу ошибок
     Path stderr_log_path;
+
+    // ip & api версии вычислителя
+    std::string ip_version;
+    std::string api_version;
+
+    // Скейл для входного тензора
+    double input_map_scale;
+
+    // Скейл для выходного тензора
+    double output_map_scales;
 };
 
 #endif // _LIB_INCLDUE_SETTINGS_METADATACREATORSETTINGS_H_

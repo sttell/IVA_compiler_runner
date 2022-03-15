@@ -9,9 +9,9 @@
 #include <thread>
 
 void init_pipeline(Pipeline& pipe) {
-    pipe.setModule(Modules::AddrChecker);
-    pipe.setModule(Modules::PickleConverter);
-    pipe.setModule(Modules::CompileRunner);
+    // pipe.setModule(Modules::AddrChecker);
+    // pipe.setModule(Modules::PickleConverter);
+    // pipe.setModule(Modules::CompileRunner);
     pipe.setModule(Modules::MetadataCreator);
 }
 
@@ -41,6 +41,18 @@ void init_global_settings(GlobalSettings& settings) {
     settings.compiler_runner.path_to_json = settings.addr_checker.out_json_path;
     settings.compiler_runner.path_to_weights = settings.pickle_converter.weights_out_path;
     settings.compiler_runner.stderr_log_path = current_dir + "/logs/compiler_runner_stderr.log";
+
+    settings.metadata_creator.compiler_dir = compiler_dir;
+    settings.metadata_creator.input_map = {1, 224, 224, 4};
+    settings.metadata_creator.output_map = settings.compiler_runner.output;
+    settings.metadata_creator.api_version = "2.0.0";
+    settings.metadata_creator.ip_version = "02.05.04";
+    settings.metadata_creator.device_type = Device::MOBILE;
+    settings.metadata_creator.input_map_scale = 0.8407199382781982;
+    settings.metadata_creator.output_map_scales = 0.3444758653640747;
+    settings.metadata_creator.out_log_path = current_dir + "/log/metadata_creator.log";
+    settings.metadata_creator.stderr_log_path = current_dir + "/log/metadata_creator_stderr.log";
+
 }
 
 int main() {
