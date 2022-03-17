@@ -1,5 +1,5 @@
 cd tmp
 cmake ../
 make
-mv main ../main
+mv gui ../../bin/gui
 cd ..

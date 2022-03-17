@@ -1,0 +1,1081 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1400</width>
+    <height>1000</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background: rgb(46, 52, 54);
+color: rgb(238, 238, 236);
+
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QTabWidget" name="MainTabs">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>-1</y>
+      <width>1400</width>
+      <height>1001</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QTabBar::tab {
+	background: rgb(0, 110, 76);
+	color:rgb(46, 52, 54);
+	border-top: 1px solid rgb(79, 79, 79);
+	border-left: 1px solid rgb(79, 79, 79);
+	border-right: 1px solid rgb(79, 79, 79);
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding: 3px;
+	margin-left:2px;
+}
+
+QTabBar::tab:selected {
+	background: rgb(0, 159, 112);
+	
+}
+
+QTabBar::tab:hover {
+	background: rgb(0, 159, 112)
+	
+}
+
+QLineEdit : focus {
+border-color: rgb(52, 101, 164);
+}
+
+
+
+</string>
+    </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
+    <widget class="QWidget" name="CompilerTab">
+     <property name="styleSheet">
+      <string notr="true">QLabel {
+	color: rgb(238, 238, 236)
+}
+
+QCheckBox {
+	color: rgb(238, 238, 236)
+}
+
+QPushButton {
+	background: rgb(0, 159, 112);
+	color: rgb(46, 52, 54);
+	border-radius: 10px;
+}
+
+QPushButton:hover {
+	background: rgb(0, 182, 128);
+}
+
+QPushButton:pressed {
+	background: rgb(0, 110, 76);
+}
+
+QLineEdit{
+border: 1px solid rgb(38, 38, 38);
+border-radius: 10px;
+color:rgb(211, 215, 207);
+}
+
+QLineEdit:focus {
+border: 1px solid rgb(114, 159, 207)
+}
+</string>
+     </property>
+     <attribute name="title">
+      <string>Компиляция программ</string>
+     </attribute>
+     <widget class="QLabel" name="ExecutionProcessLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>760</y>
+        <width>161</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 182, 128)</string>
+      </property>
+      <property name="text">
+       <string>Процесс выполнения</string>
+      </property>
+     </widget>
+     <widget class="QListView" name="ExecutionStatusListView">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>780</y>
+        <width>1400</width>
+        <height>170</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AddDebugModeCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>740</y>
+        <width>401</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Включить debug режим для tpu_data + cache_data</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="OutputSizeLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>495</y>
+        <width>121</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="InputTensorLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>430</y>
+        <width>161</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 182, 128)</string>
+      </property>
+      <property name="text">
+       <string>Входной тензор</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="ChangeWeightsPathPushButton">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>190</y>
+        <width>110</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Изменить</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="CompilationPipelineLabel">
+      <property name="geometry">
+       <rect>
+        <x>1020</x>
+        <y>110</y>
+        <width>251</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>16</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 182, 128)</string>
+      </property>
+      <property name="text">
+       <string>Пайплайн компиляции</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AddBiasPreloadCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>620</y>
+        <width>401</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Включить оптимизацию предзагрузки BIAS</string>
+      </property>
+     </widget>
+     <widget class="Line" name="HorisontalSeparator2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>570</y>
+        <width>861</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="QWidget" name="HeaderPlaneWidget" native="true">
+      <property name="geometry">
+       <rect>
+        <x>-1</x>
+        <y>0</y>
+        <width>1401</width>
+        <height>70</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">background: rgb(0, 182, 128)</string>
+      </property>
+      <widget class="QLabel" name="CompilationParametersLabel">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>24</y>
+         <width>271</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>16</pointsize>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color:rgb(46, 52, 54)</string>
+       </property>
+       <property name="text">
+        <string>Параметры компиляции</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QLineEdit" name="OutputPadUpLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>352</x>
+        <y>495</y>
+        <width>201</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="OutputTensorLabel">
+      <property name="geometry">
+       <rect>
+        <x>30</x>
+        <y>495</y>
+        <width>151</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 182, 128)</string>
+      </property>
+      <property name="text">
+       <string>Выходной тензор</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WrongFmtCatalogNameLabel">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>295</y>
+        <width>141</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(241, 45, 45)</string>
+      </property>
+      <property name="text">
+       <string>Неверный формат</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="DestroyProcessPushButton">
+      <property name="geometry">
+       <rect>
+        <x>1030</x>
+        <y>550</y>
+        <width>240</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QPushButton {
+background: rgb(205, 0, 0);
+}
+
+QPushButton : hover {
+background: rgb(241, 45, 45);
+}
+
+QPushButton : pressed {
+background: rgb(175, 0, 0);
+}</string>
+      </property>
+      <property name="text">
+       <string>Прервать</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="TensorSizeLabel">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>395</y>
+        <width>131</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Размер(B, X, Y, L):</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="OutputPadDownLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>495</y>
+        <width>201</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="JsonPathLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>110</y>
+        <width>550</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WrongFmtWeightsPathLabel">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>215</y>
+        <width>141</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(241, 45, 45)</string>
+      </property>
+      <property name="text">
+       <string>Неверный формат</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="InputPadDownLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>430</y>
+        <width>201</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AddCompilationLogCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>680</y>
+        <width>401</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Добавить логи компиляции к выходной программе</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WrongFmtOutputSizeLabel">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>520</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(241, 45, 45)</string>
+      </property>
+      <property name="text">
+       <string>Неверный формат</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AddReorderOptimizationCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>710</y>
+        <width>401</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Включить оптимизацию с перестановкой банков</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="RunProcessPushButton">
+      <property name="geometry">
+       <rect>
+        <x>1030</x>
+        <y>650</y>
+        <width>240</width>
+        <height>60</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Запуск</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="JsonPathLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>90</y>
+        <width>221</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Путь к JSON описанию сети:</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="DeviceComboBoxLabel">
+      <property name="geometry">
+       <rect>
+        <x>1080</x>
+        <y>400</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(0, 182, 128)</string>
+      </property>
+      <property name="text">
+       <string>Устройство</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="CatalogNameLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>270</y>
+        <width>550</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WeightsPathLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>170</y>
+        <width>221</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Путь к файлу с весами сети:</string>
+      </property>
+     </widget>
+     <widget class="QComboBox" name="DeviceComboBox">
+      <property name="geometry">
+       <rect>
+        <x>1000</x>
+        <y>430</y>
+        <width>281</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <item>
+       <property name="text">
+        <string>MOBILE</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>KCU</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>SERVER</string>
+       </property>
+      </item>
+     </widget>
+     <widget class="QLabel" name="PaddingsUpLabel">
+      <property name="geometry">
+       <rect>
+        <x>350</x>
+        <y>395</y>
+        <width>201</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Верхние паддинги(B, X, Y, L):</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="PickleConvertationCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>930</x>
+        <y>200</y>
+        <width>421</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Конвертировать веса Pickle -&gt; bin(HPM Scheduler)</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="MakeArchiveCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>930</x>
+        <y>320</y>
+        <width>411</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Собрать программу в архив и перенести в папку</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="WeightsPathLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>190</y>
+        <width>550</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="InputSizeEditLine">
+      <property name="geometry">
+       <rect>
+        <x>190</x>
+        <y>430</y>
+        <width>121</width>
+        <height>21</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="OptimizationOptionsLabel">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>590</y>
+        <width>211</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 182, 128)</string>
+      </property>
+      <property name="text">
+       <string>Опции оптимизаций:</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="CompileProgrammCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>930</x>
+        <y>280</y>
+        <width>301</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Скомпилировать программу</string>
+      </property>
+     </widget>
+     <widget class="Line" name="HorisontalSeparator1">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>330</y>
+        <width>861</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+     <widget class="Line" name="VerticalSeparator1">
+      <property name="geometry">
+       <rect>
+        <x>850</x>
+        <y>70</y>
+        <width>20</width>
+        <height>711</height>
+       </rect>
+      </property>
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WrongFmtJsonPathLabel">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>140</y>
+        <width>141</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(241, 45, 45)</string>
+      </property>
+      <property name="text">
+       <string>Неверный формат</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="CompilationOptionsLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>590</y>
+        <width>201</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 182, 128)</string>
+      </property>
+      <property name="text">
+       <string>Опции компиляции:</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="InputPadUpLineEdit">
+      <property name="geometry">
+       <rect>
+        <x>352</x>
+        <y>430</y>
+        <width>201</width>
+        <height>25</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AddInputOptimizationCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>680</y>
+        <width>401</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Включить оптимизацию входной карты признаков</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="JsonConvertationCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>930</x>
+        <y>160</y>
+        <width>431</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Конвертировать JSON Tensorflow - &gt; HPM Scheduler</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="PaddingsDownLabel">
+      <property name="geometry">
+       <rect>
+        <x>590</x>
+        <y>395</y>
+        <width>201</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Нижние паддинги(B, X, Y, L):</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AddScalePreloadCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>430</x>
+        <y>650</y>
+        <width>401</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Включить оптимизацию предзагрузки SCALE</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="CatalogNameLabel">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>250</y>
+        <width>251</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Название каталога с программой:</string>
+      </property>
+     </widget>
+     <widget class="QCheckBox" name="AddressCheckCheckBox">
+      <property name="geometry">
+       <rect>
+        <x>930</x>
+        <y>240</y>
+        <width>421</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Проверить адреса и размеры весов в JSON файле</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WrongFmtInputSizeLabel">
+      <property name="geometry">
+       <rect>
+        <x>200</x>
+        <y>455</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(241, 45, 45)</string>
+      </property>
+      <property name="text">
+       <string>Неверный формат</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="TensorParametersLabel">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>350</y>
+        <width>221</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>14</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(0, 182, 128)</string>
+      </property>
+      <property name="text">
+       <string>Параметры тензоров:</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="ChangeJsonPathPushButton">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>110</y>
+        <width>110</width>
+        <height>25</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>Изменить</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WrongFmtInputPadUpLabel">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>455</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(241, 45, 45)</string>
+      </property>
+      <property name="text">
+       <string>Неверный формат</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WrongFmtInputPadDownLabel">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>455</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(241, 45, 45)</string>
+      </property>
+      <property name="text">
+       <string>Неверный формат</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WrongFmtOutputPadUpLabel">
+      <property name="geometry">
+       <rect>
+        <x>360</x>
+        <y>520</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(241, 45, 45)</string>
+      </property>
+      <property name="text">
+       <string>Неверный формат</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="WrongFmtOutputPadDownLabel">
+      <property name="geometry">
+       <rect>
+        <x>600</x>
+        <y>520</y>
+        <width>101</width>
+        <height>17</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>8</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color:rgb(241, 45, 45)</string>
+      </property>
+      <property name="text">
+       <string>Неверный формат</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="RunnerTab">
+     <attribute name="title">
+      <string>Запуск программ</string>
+     </attribute>
+    </widget>
+    <widget class="QWidget" name="AnalysisTab">
+     <attribute name="title">
+      <string>Анализ результатов</string>
+     </attribute>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="MainMenu">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1400</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="SettingsMenu">
+    <property name="title">
+     <string>Настройки</string>
+    </property>
+    <addaction name="CompilationSettings"/>
+    <addaction name="RunnerSettings"/>
+    <addaction name="AnalysisSettings"/>
+   </widget>
+   <widget class="QMenu" name="DocsMenu">
+    <property name="title">
+     <string>Руководство пользователя</string>
+    </property>
+    <addaction name="MainDocs"/>
+    <addaction name="CompilationDocs"/>
+    <addaction name="RunnerDocs"/>
+    <addaction name="AnalysisDocs"/>
+   </widget>
+   <addaction name="SettingsMenu"/>
+   <addaction name="DocsMenu"/>
+  </widget>
+  <action name="CompilationSettings">
+   <property name="text">
+    <string>Компиляция</string>
+   </property>
+  </action>
+  <action name="RunnerSettings">
+   <property name="text">
+    <string>Запуск программы</string>
+   </property>
+  </action>
+  <action name="AnalysisSettings">
+   <property name="text">
+    <string>Анализ результатов</string>
+   </property>
+  </action>
+  <action name="MainDocs">
+   <property name="text">
+    <string>Общее руководство</string>
+   </property>
+  </action>
+  <action name="CompilationDocs">
+   <property name="text">
+    <string>Компиляция программ</string>
+   </property>
+  </action>
+  <action name="RunnerDocs">
+   <property name="text">
+    <string>Запуск программ</string>
+   </property>
+  </action>
+  <action name="AnalysisDocs">
+   <property name="text">
+    <string>Анализ результатов</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

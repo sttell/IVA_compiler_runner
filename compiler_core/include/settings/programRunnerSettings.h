@@ -2,6 +2,7 @@
 #define _LIB_INCLDUE_SETTINGS_PROGRAMRUNNERSETTINGS_H_
 
 #include "../path.h"
+#include "../mapSize.h"
 
 using ip_t = std::string;
 using username_t = std::string;
