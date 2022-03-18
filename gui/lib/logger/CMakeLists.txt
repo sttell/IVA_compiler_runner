@@ -2,9 +2,8 @@ cmake_minimum_required(VERSION 3.0) # Проверка версии CMake.
 									# Если версия установленой программы
 									# старее указаной, произайдёт аварийный выход.
 
-project(lib)				# Название проекта
+project(logger)				# Название проекта
 
-include_directories("configurator")
-include_directories("logger")
-add_subdirectory(configurator)
-add_subdirectory(logger)
+set(HEADERS logger.h)
+
+add_library(logger_lib OBJECT logger.cpp logger.h)# Создание статической библиотеки

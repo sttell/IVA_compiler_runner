@@ -35,3 +35,7 @@ main
 token.txt
 tmp/*
 src/modules/pickle_converter/lib/__pycache__
+gui/tmp/*
+compiler_core/tmp/*
+bin/*
+.vscode

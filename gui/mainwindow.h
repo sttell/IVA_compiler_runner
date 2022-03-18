@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "lib/logger/logger.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -25,7 +26,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    Logger *log;
 
     void initWrongFormatIndicators();
+    void initUiFromConfig();
+    void initUiCompiler();
+    void initUiRunner();
+    void initUiAnalysis();
 };
 #endif // MAINWINDOW_H
