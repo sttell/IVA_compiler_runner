@@ -1,5 +1,5 @@
 #include "../../../include/modules/addressCheckerModule.h"
-#include <filesystem>
+#include <boost/filesystem.hpp>
 
 exit_module_status AddressCheckerModule::runProcess() {
 
@@ -48,11 +48,11 @@ void AddressCheckerModule::checkSettingsCorrectness() const {
     checkFileExist(settings.pickle_buffer_path);
 
     // Проверка на размер
-    if (std::filesystem::file_size(settings.json_path.c_str()) == 0) {
+    if (boost::filesystem::file_size(settings.json_path.c_str()) == 0) {
         throw std::runtime_error("Файл с JSON описанием сети пуст.");
     }
 
-    if (std::filesystem::file_size(settings.pickle_buffer_path.c_str()) == 0) {
+    if (boost::filesystem::file_size(settings.pickle_buffer_path.c_str()) == 0) {
         throw std::runtime_error("Файл лога конвертации Pickle пуст.");
     }
 

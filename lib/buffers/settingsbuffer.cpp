@@ -32,7 +32,7 @@ void SettingsBuffer::beginGroup(const QString& group) {
     settings->beginGroup(group);
 
     // Если буффер не содержит такой группы, то она инициализируется из QSettings
-    if (!groups.contains(current_group)) {
+    if (groups.count(current_group) == 0) {
         settings_group new_group;
         for (const auto& key : settings->allKeys()) {
             new_group[key] = settings->value(key);
@@ -61,14 +61,14 @@ void SettingsBuffer::setValue(const QString& key, QVariant value) {
 
 // выдача значения по ключу
 QVariant SettingsBuffer::value(const QString& key) {
-    if (!groups[current_group].contains(key))
+    if (groups[current_group].count(key) == 0)
         groups[current_group][key] = settings->value(key);
     return groups[current_group][key];
 };
 
 // выдача значения по ключу или стандартное значение
 QVariant SettingsBuffer::value(const QString& key, QVariant default_value) {
-    if (!groups[current_group].contains(key))
+    if (groups[current_group].count(key) == 0)
         groups[current_group][key] = settings->value(key, default_value);
     return groups[current_group][key];
 }

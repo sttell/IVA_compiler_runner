@@ -7,7 +7,7 @@
 #include <QFileDialog>
 #include <QRegularExpression>
 #include <QStyle>
-#include <filesystem>
+#include <boost/filesystem/operations.hpp>
 #include <string>
 #include <unistd.h>
 
@@ -125,7 +125,7 @@ void WelcomeWizard::on_InputCompilerPathLineEdit_editingFinished()
     // Проверка существования директории при ручном вводе
     std::string path(ui->InputCompilerPathLineEdit->text().toStdString());
 
-    if(!std::filesystem::is_directory(path)) {
+    if(!boost::filesystem::is_directory(path)) {
         ui->WrongFmtCompilerDirectoryLabel->setVisible(true);
     } else {
         ui->WrongFmtCompilerDirectoryLabel->setVisible(false);

@@ -12,7 +12,6 @@
 #include "ui/welcome_form.h"
 #include "ui/compiler_settings_dialog.h"
 
-#include <filesystem>
 #include <boost/process.hpp>
 #include <QSettings>
 #include <QRegularExpression>
@@ -23,7 +22,7 @@
 #include <iostream>
 #include <QTime>
 #include <QRect>
-#include <filesystem>
+#include <boost/filesystem.hpp>
 #include <boost/process/posix.hpp>
 #include <unistd.h>
 
@@ -352,27 +351,27 @@ void MainWindow::initUiRunnerPanelStates(){
             QString logs_dir = program_dir + "/logs";
             QString output_dir = program_dir + "/output";
 
-            if (std::filesystem::is_regular_file((program_dir + "/cmd0.bin").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/cmd0.bin").toStdString()))
                 is_cmd0bin_found = true;
-            if (std::filesystem::is_regular_file((program_dir + "/cmd1.bin").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/cmd1.bin").toStdString()))
                 is_cmd1bin_found = true;
-            if (std::filesystem::is_regular_file((program_dir + "/cmd2.bin").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/cmd2.bin").toStdString()))
                 is_cmd2bin_found = true;
-            if (std::filesystem::is_regular_file((program_dir + "/cmd3.bin").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/cmd3.bin").toStdString()))
                 is_cmd3bin_found = true;
-            if (std::filesystem::is_regular_file((program_dir + "/cmd4.bin").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/cmd4.bin").toStdString()))
                 is_cmd4bin_found = true;
-            if (std::filesystem::is_regular_file((program_dir + "/cmd5.bin").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/cmd5.bin").toStdString()))
                 is_cmd5bin_found = true;
-            if (std::filesystem::is_regular_file((program_dir + "/cmd.json").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/cmd.json").toStdString()))
                 is_cmdjson_found = true;
-            if (std::filesystem::is_regular_file((program_dir + "/metadata.json").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/metadata.json").toStdString()))
                 is_metadata_found = true;
-            if (std::filesystem::is_regular_file((program_dir + "/logs/CashData").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/logs/CashData").toStdString()))
                 is_cache_data_found = true;
-            if (std::filesystem::is_regular_file((program_dir + "/logs/tpu_data").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/logs/tpu_data").toStdString()))
                 is_tpu_data_found = true;
-            if (std::filesystem::is_regular_file((program_dir + "/output/output.bin").toStdString()))
+            if (boost::filesystem::is_regular_file((program_dir + "/output/output.bin").toStdString()))
                 is_output_found = true;
 
             ui->ShowCmd0Button->setEnabled(is_cmd0bin_found);
@@ -590,7 +589,7 @@ void MainWindow::on_JsonPathLineEdit_editingFinished()
     QString path = ui->JsonPathLineEdit->text();
 
     // Если файл существует
-    bool is_exist = std::filesystem::is_regular_file(path.toStdString());
+    bool is_exist = boost::filesystem::is_regular_file(path.toStdString());
     // Если файл нужного формата
     bool is_json = path.toLower().endsWith(".json");
 
@@ -625,7 +624,7 @@ void MainWindow::on_WeightsPathLineEdit_editingFinished()
     else current_format = ".bin";
 
     // Если файл существует
-    bool is_exist = std::filesystem::is_regular_file(path.toStdString());
+    bool is_exist = boost::filesystem::is_regular_file(path.toStdString());
     // Если файл нужного формата
     bool is_weights = path.toLower().endsWith(current_format);
 
@@ -771,8 +770,8 @@ void MainWindow::on_ChangeJsonPathPushButton_clicked()
     // Изменение пути к JSON файлу.
     QString current_path = ui->JsonPathLineEdit->text();
     // Проверка существования текущего пути или пути к директории
-    bool is_path_exist = (std::filesystem::is_regular_file(current_path.toStdString()) ||
-                          std::filesystem::is_directory(current_path.toStdString()));
+    bool is_path_exist = (boost::filesystem::is_regular_file(current_path.toStdString()) ||
+                          boost::filesystem::is_directory(current_path.toStdString()));
 
     // Базовый стартовый путь
     QString start_path("/home/");
@@ -801,8 +800,8 @@ void MainWindow::on_ChangeWeightsPathPushButton_clicked()
 {
     // Текущее состояние введенного пути и проверка его существования
     QString current_path = ui->WeightsPathLineEdit->text();
-    bool is_path_exist = (std::filesystem::is_regular_file(current_path.toStdString()) ||
-                          std::filesystem::is_directory(current_path.toStdString()));
+    bool is_path_exist = (boost::filesystem::is_regular_file(current_path.toStdString()) ||
+                          boost::filesystem::is_directory(current_path.toStdString()));
     // Базовый путь
     QString start_path("/home/");
     // Если текущий путь существует, то устанавливаем его в качестве стартового
@@ -955,7 +954,7 @@ void MainWindow::on_OutputDirPathLineEdit_editingFinished()
 {
     // Проверка существования указанной директории.
     QString current_path(ui->OutputDirPathLineEdit->text());
-    if (!std::filesystem::is_directory(current_path.toStdString())) {
+    if (!boost::filesystem::is_directory(current_path.toStdString())) {
         ui->WrongFmtOutputDirPathLabel->setText("Указанной директории не существует.");
         ui->WrongFmtOutputDirPathLabel->setVisible(true);
     } else {
@@ -970,7 +969,7 @@ void MainWindow::on_OutputDirPathPushButton_clicked()
     QString current_path(ui->OutputDirPathLineEdit->text());
     QString start_path("/home/");
 
-    if (std::filesystem::is_directory(current_path.toStdString())) start_path = current_path;
+    if (boost::filesystem::is_directory(current_path.toStdString())) start_path = current_path;
 
     QString path = QFileDialog::getExistingDirectory(this, "Выберите директорию для программ", start_path);
 
@@ -1136,7 +1135,7 @@ void MainWindow::on_ProgramDirPathLineEdit_editingFinished()
 {
     QString current_text(ui->ProgramDirPathLineEdit->text());
 
-    if (!std::filesystem::is_directory(current_text.toStdString())) {
+    if (!boost::filesystem::is_directory(current_text.toStdString())) {
         ui->WrongFmtProgramDirPathLabel->setVisible(true);
     } else {
         ui->WrongFmtProgramDirPathLabel->setVisible(false);
@@ -1155,7 +1154,7 @@ void MainWindow::on_ChangeProgramDirPathButton_clicked()
     QString current_path(ui->ProgramDirPathLineEdit->text());
     QString start("/home/"); start += getlogin();
 
-    if (std::filesystem::is_directory(current_path.toStdString())) start = current_path;
+    if (boost::filesystem::is_directory(current_path.toStdString())) start = current_path;
 
     QString new_path = QFileDialog::getExistingDirectory(this,
                                                          "Выберите директорию с программой",
@@ -1170,7 +1169,7 @@ void MainWindow::on_ChangeInputTensorPathButton_clicked()
     QString current_path(ui->InputTensorPathLineEdit->text());
     QString start("/home/"); start += getlogin();
 
-    if (std::filesystem::is_directory(current_path.toStdString())) start = current_path;
+    if (boost::filesystem::is_directory(current_path.toStdString())) start = current_path;
 
     QString new_path = QFileDialog::getOpenFileName(this,
                                                     "Выберите файл с входным тензором",
@@ -1402,7 +1401,7 @@ void MainWindow::on_GeneratedTensorSavePathLineEdit_editingFinished()
     splitted.removeAt(splitted.size() - 1);
     QString directory = splitted.join('/');
     std::cout << "Tensor:" << directory.toStdString() << std::endl;
-    if (!std::filesystem::is_directory(directory.toStdString())) {
+    if (!boost::filesystem::is_directory(directory.toStdString())) {
         ui->WrongFmtGeneratedTensorSavePathLabel->setText("Директории по указанному пути не существует.");
         ui->WrongFmtGeneratedTensorSavePathLabel->setVisible(true);
     } else if (!current_path.endsWith(".bin")){

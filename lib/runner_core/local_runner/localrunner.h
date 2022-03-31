@@ -1,10 +1,10 @@
 #ifndef LOCALRUNNER_H
 #define LOCALRUNNER_H
 
-#include <filesystem>
-#include <string>
 #include <boost/process.hpp>
+#include <boost/filesystem.hpp>
 #include <iostream>
+#include <string>
 
 #include "lib/runner_core/runner_settings.h"
 #include "lib/thread_api/progressbar_buffer.h"
@@ -34,7 +34,7 @@ private:
 
     void readPipe(boost::process::ipstream& pipe, std::string& text);
 
-    boost::process::ipstream runProgramm();
+    void runProgramm();
 
     void stdoutPostprocess(boost::process::ipstream& out);
 };

@@ -66,7 +66,8 @@ void ProgramComparatorModule::fillProgramFilesDescriptors(std::vector<ProgramFil
     descriptors.resize(IPCM::program_filenames.size());
 
     // Проходимся по всем дескрипторам и заполняем их информацией
-    for (size_t idx = 0; ProgramFileDesc& descriptor : descriptors) {
+    size_t idx = 0;
+    for (ProgramFileDesc& descriptor : descriptors) {
         // Имя файла
         descriptor.filename = IPCM::program_filenames[idx];
         

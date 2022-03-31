@@ -6,7 +6,7 @@
 #include <vector>
 #include <string>
 #include <boost/program_options.hpp>
-#include <filesystem>
+#include <boost/filesystem/operations.hpp>
 namespace opt = boost::program_options;
 
 // Дескриптор устройства. Необходим для формирования файла с метаданными.
@@ -59,7 +59,7 @@ public:
 private:
     // Запуск инициализации определенного устройства
     void init(Device device_type) { 
-        std::string current_path = std::filesystem::current_path();
+        std::string current_path = boost::filesystem::current_path().generic_string();
 
         switch (device_type)
         { 

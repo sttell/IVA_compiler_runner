@@ -4,7 +4,7 @@
 #include "include/wrong_fmt_captures.h"
 #include "ui/warning_settings_dialog.h"
 
-#include <filesystem>
+#include <boost/filesystem/operations.hpp>
 #include <iostream>
 #include <QFileDialog>
 #include <QRegularExpression>
@@ -190,7 +190,7 @@ void CompilerSettingsDialog::on_ChangeCompilerDirPushButton_clicked()
 
     // Если текущая введенная директория существует, то открываем там
     // иначе - в домашней папке
-    if (std::filesystem::is_directory(current_dir.toStdString()))
+    if (boost::filesystem::is_directory(current_dir.toStdString()))
         open_path = current_dir;
     else
         open_path = "/home/";
@@ -216,7 +216,7 @@ void CompilerSettingsDialog::on_CompilerDirLineEdit_editingFinished()
     std::string path(ui->CompilerDirLineEdit->text().toStdString());
 
     // Если путь существует, то норм, если нет - высветим индикатор
-    if(!std::filesystem::is_directory(path)) {
+    if(!boost::filesystem::is_directory(path)) {
         ui->WrongFmtCompilerDirLabel->setVisible(true);
     } else {
         ui->WrongFmtCompilerDirLabel->setVisible(false);
