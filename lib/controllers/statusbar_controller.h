@@ -1,6 +1,7 @@
 #ifndef STATUSBARCONTROLLER_H
 #define STATUSBARCONTROLLER_H
 
+#include "include/compile_errors.h"
 #include <memory>
 #include <thread>
 #include <mutex>
@@ -27,6 +28,7 @@ public:
 
     // Запись сообщения с header и определенным цветом
     void writeMessage(const QString& message, QString header="auto", QColor color=MessageColor::normal);
+
     // Очистка статус бара
     void clear();
     // Выдача текста статус бара

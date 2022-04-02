@@ -2,6 +2,8 @@
 #define STATUSBUFFERCACHE_H
 
 #include "lib/controllers/statusbar_controller.h"
+#include "include/compile_errors.h"
+#include "include/runner_errors.h"
 #include <memory>
 #include <mutex>
 #include <queue>
@@ -30,6 +32,9 @@ public:
     bool isProcessEnded();
     StatusMessage getNext();
     void writeMessage(const std::string& message, const std::string& header="auto", QColor color=MessageColor::normal);
+    // Запись сообщения с header и определенным цветом
+    void writeMessage(CompileError error_type, const std::string& header="auto");
+    void writeMessage(RunnerError error_type, const std::string& header="auto");
     void endProcess();
 
 private:

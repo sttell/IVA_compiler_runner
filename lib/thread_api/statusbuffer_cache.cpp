@@ -34,6 +34,14 @@ void StatusBufferCache::writeMessage(const std::string& message, const std::stri
     }
 }
 
+void StatusBufferCache::writeMessage(CompileError error_type, const std::string& header) {
+    this->writeMessage(compile_error_desc[error_type], header, MessageColor::error);
+}
+
+void StatusBufferCache::writeMessage(RunnerError error_type, const std::string& header) {
+    this->writeMessage(runner_error_desc[error_type], header, MessageColor::error);
+}
+
 // Проверка на завершение процесса
 bool StatusBufferCache::isProcessEnded() {
     std::lock_guard lg(data_mutex);

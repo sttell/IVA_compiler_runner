@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.5)
 
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Project: Iva Compiler Runner
-# Version: 0.1
+# Version: 1.0
 # Maintainer: Ilya Biro <st.tell@mail.ru>
 # Main Langluage: C++ 20 standard.
 # Required libraries:
@@ -12,7 +12,7 @@ cmake_minimum_required(VERSION 3.5)
 #    Libssh
 #    pyrhon3 with numpy & pickle
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-project(ivacr VERSION 0.1 LANGUAGES CXX)
+project(ivacr VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -20,16 +20,15 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC OFF)
 
-set(CMAKE_CXX_COMPILER_VERSION 12)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-fpermissive)
-	
+
 # Find packages
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)                 # Qt5, Qt6
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)            # Qt components
-find_package(Boost COMPONENTS filesystem thread program_options)           # Boost
-find_package(libssh REQUIRED CONFIG)                                       # Libssh
+find_package(Boost COMPONENTS system filesystem thread program_options REQUIRED)    # Boost
+find_package(libssh REQUIRED)                                       # Libssh
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                                                               |
@@ -181,6 +180,8 @@ set (GUI_LIB_HEADERS
 	include/log_config.h
     include/settings_config.h
     include/wrong_fmt_captures.h
+    include/compile_errors.h
+    include/runner_errors.h
     lib/buffers/settingsbuffer.h
 )
 
@@ -266,7 +267,7 @@ else()
     endif()
 endif()
 
-target_link_libraries(ivacr PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${USER_LIBS})
+target_link_libraries(ivacr PRIVATE Qt${QT_VERSION_MAJOR}::Widgets libpthread.so.0 ${USER_LIBS})
 set_target_properties(ivacr PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}

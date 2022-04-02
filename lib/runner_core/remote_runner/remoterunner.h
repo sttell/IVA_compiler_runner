@@ -6,7 +6,7 @@
 #include <libssh/libssh.h>
 #include <libssh/sftp.h>
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include <string>
 #include <boost/process.hpp>
 #include <iostream>

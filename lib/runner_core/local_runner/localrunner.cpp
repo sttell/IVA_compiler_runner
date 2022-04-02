@@ -15,7 +15,7 @@ void LocalRunner::runProcess() {
         (*progress)++;
         runProgramm();
         (*progress)++;
-        
+        (*progress)++;
 
     }  catch (const std::exception& e) {
         std::string err_desc(LOCAL_RUNNER_THROW_HEADER);
@@ -27,13 +27,13 @@ void LocalRunner::runProcess() {
 
 void LocalRunner::checkSettingsCorrectness() {
     QString program_zip = settings.program_directory + "/" + settings.program_name;
-    if (!boost::filesystem::is_regular_file(program_zip.toStdString())) {
+    if (!std::filesystem::is_regular_file(program_zip.toStdString())) {
         std::string err_desc("Файл с программой ");
         err_desc += program_zip.toStdString() + " не найден.";
         throw std::runtime_error(err_desc);
     }
 
-    if (!boost::filesystem::is_regular_file(settings.input_tensor_path.toStdString())) {
+    if (!std::filesystem::is_regular_file(settings.input_tensor_path.toStdString())) {
         std::string err_desc("Файл со входным тензором ");
         err_desc += settings.input_tensor_path.toStdString() + " не найден.";
         throw std::runtime_error(err_desc);
@@ -44,8 +44,8 @@ void LocalRunner::checkSettingsCorrectness() {
 void LocalRunner::makeOutputDirectory() {
     std::string output_dir = settings.program_directory.toStdString() + "/output";
 
-    if (!boost::filesystem::is_directory(output_dir))
-        boost::filesystem::create_directory(output_dir);
+    if (!std::filesystem::is_directory(output_dir))
+        std::filesystem::create_directory(output_dir);
 }
 
 void LocalRunner::formExecCommand(std::string& exec) {
@@ -70,7 +70,7 @@ void LocalRunner::runProgramm() {
     std::string exec;
     formExecCommand(exec);
 
-    boost::process::ipstream out, err;
+    boost::process::ipstream stdout_pipe, stderr_pipe;
 
     log->writeMessage("Локальный запуск программы...");
 
@@ -79,25 +79,21 @@ void LocalRunner::runProgramm() {
 
     boost::process::system(
                 exec,
-                boost::process::std_out > out,
-                boost::process::std_err > err
+                boost::process::std_out > stdout_pipe,
+                boost::process::std_err > stderr_pipe
                 );
-                
-    
+
     std::string stderr_text;
 
-    readPipe(err, stderr_text);
+    readPipe(stderr_pipe, stderr_text);
 
     if (!stderr_text.empty()) {
         throw std::runtime_error(stderr_text);
     }
-    
-    
 
     log->writeMessage("Локальный запуск прошел успешно.");
 
-    stdoutPostprocess(out);
-    (*progress)++;
+    stdoutPostprocess(stdout_pipe);
 }
 
 void LocalRunner::stdoutPostprocess(boost::process::ipstream& out) {

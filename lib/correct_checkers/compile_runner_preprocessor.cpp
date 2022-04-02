@@ -3,7 +3,7 @@
 #include "lib/compiler_core/include/compilerCore.h"
 #include "lib/thread_api/statusbuffer_cache.h"
 
-#include <boost/filesystem.hpp>
+#include <filesystem>
 #include <QRegularExpression>
 #include <iostream>
 #include <memory>
@@ -90,7 +90,7 @@ void CompileRunnerProcessor::checkRegularSettings() {
 
     // Обработка неверных событий
 
-    if (!boost::filesystem::is_directory(compiler_dir.toStdString())) {
+    if (!std::filesystem::is_directory(compiler_dir.toStdString())) {
         throw std::runtime_error("Директория с компилятором не найдена. Проверьте общие настройки компиляции");
     }
 

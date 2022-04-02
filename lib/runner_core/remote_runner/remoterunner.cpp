@@ -71,13 +71,13 @@ void RemoteRunner::runProcess() {
 
 void RemoteRunner::checkSettingsCorrectness() {
     if (!settings.is_remote_tensor) {
-        if (!boost::filesystem::is_regular_file(settings.input_tensor_path.toStdString())) {
+        if (!std::filesystem::is_regular_file(settings.input_tensor_path.toStdString())) {
             throw std::runtime_error("Файла с входным тензором не существует.");
         }
     }
 
     QString program_zip = settings.program_directory + "/" + settings.program_name;
-    if (!boost::filesystem::is_regular_file(program_zip.toStdString())) {
+    if (!std::filesystem::is_regular_file(program_zip.toStdString())) {
         std::string err_desc("Файл с программой ");
         err_desc += program_zip.toStdString() + " не найден.";
         throw std::runtime_error(err_desc);
@@ -131,8 +131,8 @@ void RemoteRunner::copyOutputToLocal(ssh_session& ssh, sftp_session& sftp) {
     QString local_out_path = settings.program_directory + "/output/output.bin";
     QString local_out_dir  = settings.program_directory + "/output";
 
-    if (!boost::filesystem::is_directory(local_out_dir.toStdString()))
-        boost::filesystem::create_directory(local_out_dir.toStdString());
+    if (!std::filesystem::is_directory(local_out_dir.toStdString()))
+        std::filesystem::create_directory(local_out_dir.toStdString());
 
     copyFileFromRemoteHost(ssh, sftp, local_out_path.toStdString(), remote_pathes.output_path, "выходной файл");
 
@@ -274,7 +274,7 @@ void RemoteRunner::copyFileToRemoteHost(ssh_session& ssh, sftp_session& sftp, st
         throw std::runtime_error(err_desc);
     }
 
-    int local_file_size   = boost::filesystem::file_size(local_path);
+    int local_file_size   = std::filesystem::file_size(local_path);
     int num_full_chunks   = local_file_size / (SFTP_TRANSFER_CHUNK_SIZE);
 
     std::ifstream fin(local_path, std::ios::binary | std::ios::in);
@@ -373,7 +373,7 @@ void RemoteRunner::copyFileFromRemoteHost(ssh_session& ssh, sftp_session& sftp, 
         throw std::runtime_error(err_desc);
     }
 
-    local_file_descriptor = open(local_path.c_str(), O_CREAT | O_RDWR, S_IRWXU);
+    local_file_descriptor = open(local_path.c_str(), O_CREAT | O_RDWR, S_IRWXG);
 
     if (local_file_descriptor < 0) {
         std::string err_desc("Не удалось файл на запись на локальном хостинге: "); err_desc += file_desc;
@@ -461,8 +461,8 @@ void RemoteRunner::createRemoteDirectory(ssh_session& ssh, sftp_session& sftp, s
 
 }
 void RemoteRunner::createLocalDirectory(std::string path) {
-    if (!boost::filesystem::is_directory(path))
-       boost::filesystem::create_directory(path);
+    if (!std::filesystem::is_directory(path))
+       std::filesystem::create_directory(path);
 }
 void RemoteRunner::initDirectories(ssh_session& ssh, sftp_session& sftp) {
     std::string tensors_dir(REMOTE_TEMPORAL_DIRECTORY);

@@ -12,18 +12,18 @@
 #    sudo ./install.sh /path/to/build/dir
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get g++12
-# Установка модулей
-sudo apt-get install -y libboost-all-dev  # Boost
-sudo apt-get install -y libssh-dev        # LibSSH
-sudo apt-get install -y qt5-default       # Qt5
-sudo apt-get install -y build-essential   # Build Essential for Qt
-sudo apt-get install -y libgl1-mesa-dev   # OpenGL for Qt
+# sudo apt-get update
+# sudo apt-get upgrade
+# sudo apt-get g++12
+# # Установка модулей
+# sudo apt-get install -y libboost-all-dev  # Boost
+# sudo apt-get install -y libssh-dev        # LibSSH
+# sudo apt-get install -y qt5-default       # Qt5
+# sudo apt-get install -y build-essential   # Build Essential for Qt
+# sudo apt-get install -y libgl1-mesa-dev   # OpenGL for Qt
 
-pip install numpy                         # Numpy module
-#pip install pickle                        # Pickle module
+# pip install numpy                         # Numpy module
+# #pip install pickle                        # Pickle module
 
 # Определение переменных
 build_directory=$1

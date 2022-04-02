@@ -122,8 +122,7 @@ void MetadataCreatorModule::fillProgramFileDescriptors(
     file_descriptors.resize(IMCM::program_filenames.size());
 
     // Проходимся по всем дескрипторам и заполняем их информацией
-    size_t idx = 0;
-    for (ProgramFileDesc& descriptor : file_descriptors) {
+    for (size_t idx = 0; ProgramFileDesc& descriptor : file_descriptors) {
         // Имя файла
         descriptor.filename = IMCM::program_filenames[idx];
 
@@ -251,8 +250,7 @@ void MetadataCreatorModule::createInstructionsBlock(
     std::vector<ptree> cmd_blocks(num_instruction_files);
 
     // Заполняем подблоки с инструкциями для CMD файлов
-    size_t idx=0;
-    for(ptree& cmd_block : cmd_blocks) {
+    for(size_t idx=0; ptree& cmd_block : cmd_blocks) {
         if (is_cmd_comparator(file_descriptors.at(idx))) {
             createOneInstructionBlock(file_descriptors.at(idx), cmd_block);
             instructions_block.push_back(std::make_pair("", cmd_block));
@@ -285,8 +283,7 @@ void MetadataCreatorModule::createConstantsBlock(
 
 
     // Проходимся по дейскрипторам файлов с константами и заполняем нужную информацию в подблоки
-    size_t idx = 0;
-    for (ProgramFileDesc& file_descriptor : constants_descriptors) {
+    for (size_t idx=0; ProgramFileDesc& file_descriptor : constants_descriptors) {
         ptree constant_files_block;
         ptree constant_space;
         constant_space.put("address", 0);
