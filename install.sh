@@ -12,10 +12,8 @@
 #    sudo ./install.sh /path/to/build/dir
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-# sudo apt-get update
-# sudo apt-get upgrade
-# sudo apt-get g++12
-# # Установка модулей
+
+# Установка модулей
 # sudo apt-get install -y libboost-all-dev  # Boost
 # sudo apt-get install -y libssh-dev        # LibSSH
 # sudo apt-get install -y qt5-default       # Qt5

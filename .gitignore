@@ -39,3 +39,4 @@ gui/tmp/*
 compiler_core/tmp/*
 bin/*
 .vscode
+doxygen
