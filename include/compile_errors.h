@@ -22,6 +22,7 @@
  */
 enum class CompileError
 {
+
     JSON_NOT_FOUND,             // Не найден файл с JSON описанием сети
     WEIGHTS_NOT_FOUND,          // Не найден файл с весами сети
     WRONG_WEIGHTS_FORMAT,       // Формат весов не соответствует пайплайну компиляции
@@ -29,6 +30,7 @@ enum class CompileError
     WRONG_PADDINGS_FORMAT,      // Недопустимый формат паддингов
     WRONG_INPUT_SIZE,           // Недопустимый формат размеров входного тензора
     WRONG_OUTPUT_SIZE           // Недопустимый формат размеров выхоного тензора
+
 };
 
 
@@ -36,6 +38,7 @@ enum class CompileError
  * @brief Глобальная переменная, которая хранит текстовые описания ошибок.
  */
 inline const std::map<CompileError, const char*> compile_error_desc {
+
     { CompileError::JSON_NOT_FOUND,        "JSON файл с описание сети не найден." },
     { CompileError::WEIGHTS_NOT_FOUND,     "Файл с весами не найден." },
     { CompileError::WRONG_WEIGHTS_FORMAT,  "Файл с весами имеет формат не соответствующий пайплайну компиляции." },
@@ -43,6 +46,7 @@ inline const std::map<CompileError, const char*> compile_error_desc {
     { CompileError::WRONG_PADDINGS_FORMAT, "Неверный формат паддингов." },
     { CompileError::WRONG_INPUT_SIZE,      "Неверный формат размеров входного тензора." },
     { CompileError::WRONG_OUTPUT_SIZE,     "Неверный формат размеров выходного тензора." }
+
 };
 
 #endif // COMPILE_ERRORS_H
