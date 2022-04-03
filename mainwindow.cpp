@@ -29,7 +29,7 @@
 #include "lib/runner_core/runnercore.h"
 
 // UI интерфейсы
-#include "./ui_mainwindow.h"
+#include "mainwindow_ui.h"
 #include "ui/remote_auth_dialog.h"
 #include "ui/welcome_form.h"
 #include "ui/compiler_settings_dialog.h"

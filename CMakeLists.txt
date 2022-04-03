@@ -16,7 +16,7 @@ project(ivacr VERSION 1.0 LANGUAGES CXX)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOUIC OFF)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC OFF)
 
@@ -25,7 +25,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_compile_options(-fpermissive)
 
 # Find packages
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)                 # Qt5, Qt6
+find_package(QT NAMES Qt5 COMPONENTS Widgets REQUIRED)                 # Qt5, Qt6
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)            # Qt components
 find_package(Boost COMPONENTS system filesystem thread program_options REQUIRED)    # Boost
 find_package(libssh REQUIRED)                                       # Libssh
@@ -148,6 +148,7 @@ set (MAINWINDOW_SOURCES
     mainwindow.cpp
     mainwindow.h
     mainwindow.ui
+    mainwindow_ui.h
 )
 
 set (WELCOME_FORM_SOURCES
@@ -244,38 +245,9 @@ include_directories("ui")
 #                   Making project
 #~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
-    qt_add_executable(ivacr
-        MANUAL_FINALIZATION
-        ${PROJECT_SOURCES}
-    )
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET ivacr APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
-else()
-    if(ANDROID)
-        add_library(ivacr SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(ivacr
-            ${PROJECT_SOURCES}
-        )
-    endif()
-endif()
 
-target_link_libraries(ivacr PRIVATE Qt${QT_VERSION_MAJOR}::Widgets libpthread.so.0 ${USER_LIBS})
-set_target_properties(ivacr PROPERTIES
-    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
-    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
-    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
-    MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+add_executable(ivacr
+    ${PROJECT_SOURCES}
 )
 
-if(QT_VERSION_MAJOR EQUAL 6)
-    qt_finalize_executable(ivacr)
-endif()
+target_link_libraries(ivacr PRIVATE Qt${QT_VERSION_MAJOR}::Widgets ${USER_LIBS})
