@@ -29,8 +29,9 @@ enum class CompileError
     WRONG_CATALOG_NAME,         // Недопустимое имя каталога с программой
     WRONG_PADDINGS_FORMAT,      // Недопустимый формат паддингов
     WRONG_INPUT_SIZE,           // Недопустимый формат размеров входного тензора
-    WRONG_OUTPUT_SIZE           // Недопустимый формат размеров выхоного тензора
-
+    WRONG_OUTPUT_SIZE,          // Недопустимый формат размеров выхоного тензора
+    EMPTY_JSON_FILE,
+    EMPTY_PICKLE_LOG,
 };
 
 
@@ -45,7 +46,9 @@ inline const std::map<CompileError, const char*> compile_error_desc {
     { CompileError::WRONG_CATALOG_NAME,    "Название каталога с программой имеет неверный формат." },
     { CompileError::WRONG_PADDINGS_FORMAT, "Неверный формат паддингов." },
     { CompileError::WRONG_INPUT_SIZE,      "Неверный формат размеров входного тензора." },
-    { CompileError::WRONG_OUTPUT_SIZE,     "Неверный формат размеров выходного тензора." }
+    { CompileError::WRONG_OUTPUT_SIZE,     "Неверный формат размеров выходного тензора." },
+    { CompileError::EMPTY_JSON_FILE,       "Файл с JSON описанием сети пуст." },
+    { CompileError::EMPTY_PICKLE_LOG,      "Файл лога конвертации Pickle пуст." }
 
 };
 
