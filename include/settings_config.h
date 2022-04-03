@@ -29,23 +29,23 @@
 /**
  * @brief Имя группы с настройками компиляции (Вариативные настройки).
  */
-#define COMPILER_SETTINGS_GROUP "Compiler Settings"
+#define COMPILER_SETTINGS_GROUP "Compiler_Settings"
 
 /**
  * @brief Имя группы с настройками запуска программы (Общие настройки).
  * @details Настройки аунтефикации пользователя хранятся в REMOTE_AUTH_GROUP
  */
-#define RUNNER_SETTINGS_GROUP   "Runner Settings"
+#define RUNNER_SETTINGS_GROUP   "Runner_Settings"
 
 /**
  * @brief Имя группы с настройками анализа программ.
  */
-#define ANALYSIS_SETTINGS_GROUP "Analysis Settings"
+#define ANALYSIS_SETTINGS_GROUP "Analysis_Settings"
 
 /**
  * @brief Имя глобальной группы настроек с общими настройками приложения и статическими настройками компиляции.
  */
-#define GLOBAL_SETTINGS_GROUP   "Global Settings"
+#define GLOBAL_SETTINGS_GROUP   "Global_Settings"
 
 /**
  * @brief Имя группы настроек с параметрами аунтефикации пользователя на удаленном хосте.

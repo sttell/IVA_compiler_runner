@@ -1,4 +1,5 @@
 #include "remote_auth_dialog.h"
+#include "include/settings_config.h"
 
 // Конструктор принимает на вход родительский виджет + объект
 // Содержащий настройки приложения.
